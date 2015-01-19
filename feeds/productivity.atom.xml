@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Research Notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/" rel="alternate"></link><link href="http://nate-d-olson.github.io/lab_notebok/feeds/productivity.atom.xml" rel="self"></link><id>http://nate-d-olson.github.io/lab_notebok/</id><updated>2015-01-16T00:00:00+01:00</updated><entry><title>Setting up pelican lab notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/setting%20up%20pelican.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-16:lab_notebok/setting up pelican.html</id><summary type="html">&lt;h1&gt;Setting up python virtual&amp;nbsp;environment&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;virtual env
+env/bin/pip install pelican markdown Fabric 
+git clone https://github.com/ipython/ipython.git
+cd ipython
+../env/bin/pip install -e &amp;quot;.[notebook]&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Initializing&amp;nbsp;website&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;source env/bin/activate
+pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Pelican&amp;nbsp;plugins&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;* general plugins
+    git clone https://github.com/getpelican/pelican-plugins.git
+* ipynb
+    git clone https://github.com/danielfrg/pelican-ipynb.git
+* render math
+    mkdir plugins
+    cd plugins
+    cp -r ../pelican-plugins/render_math .
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h1&gt;Modify&amp;nbsp;Pelican&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;plugin&lt;/span&gt; &lt;span class="nx"&gt;information&lt;/span&gt;
+    &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nx"&gt;pelicanconf&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;py&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="nx"&gt;creating&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="nx"&gt;template&lt;/span&gt; &lt;span class="nx"&gt;markdown&lt;/span&gt; &lt;span class="nx"&gt;file&lt;/span&gt;
+&lt;span class="nx"&gt;fabfile&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;py&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="lab notebook"></category></entry></feed>

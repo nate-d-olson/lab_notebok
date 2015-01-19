@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head>
+    <title>Investigation of issues preventing joing vcf file - Research Notebook</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/pileup clean.html">
+
+        <meta name="author" content="Nate Olson" />
+        <meta name="keywords" content="consensus base" />
+        <meta name="description" content="Look into different parameters for filtering vcf file." />
+
+        <meta property="og:site_name" content="Research Notebook" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Investigation of issues preventing joing vcf file"/>
+        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/pileup clean.html"/>
+        <meta property="og:description" content="Look into different parameters for filtering vcf file."/>
+        <meta property="article:published_time" content="2014-11-18" />
+            <meta property="article:section" content="Micro RM" />
+            <meta property="article:tag" content="consensus base" />
+            <meta property="article:author" content="Nate Olson" />
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="http://nate-d-olson.github.io/lab_notebok/theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="http://nate-d-olson.github.io/lab_notebok/theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="http://nate-d-olson.github.io/lab_notebok/theme/css/pygments/native.css" rel="stylesheet">
+        <link href="http://nate-d-olson.github.io/lab_notebok/theme/css/typogrify.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://nate-d-olson.github.io/lab_notebok/theme/css/style.css" type="text/css"/>
+
+        <link href="http://nate-d-olson.github.io/lab_notebok/feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="Research Notebook ATOM Feed"/>
+
+</head>
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://nate-d-olson.github.io/lab_notebok/" class="navbar-brand">
+Research Notebook            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                        <li >
+                            <a href="http://nate-d-olson.github.io/lab_notebok/category/ipynb.html">Ipynb</a>
+                        </li>
+                        <li class="active">
+                            <a href="http://nate-d-olson.github.io/lab_notebok/category/micro-rm.html">Micro rm</a>
+                        </li>
+                        <li >
+                            <a href="http://nate-d-olson.github.io/lab_notebok/category/productivity.html">Productivity</a>
+                        </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="http://nate-d-olson.github.io/lab_notebok/archives.html"><i class="fa fa-th-list"></i><span class="icon-label">Archives</span></a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://nate-d-olson.github.io/lab_notebok/pileup clean.html"
+                       rel="bookmark"
+                       title="Permalink to Investigation of issues preventing joing vcf file">
+                        Investigation of issues preventing joing vcf&nbsp;file
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2014-11-18T00:00:00+01:00"> Tue 18 November 2014</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">consensus base</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <h1>script revisions for bam&nbsp;mpileups</h1>
+<p>Note binaries and data files are in the downloads directory
+<span class="caps">REF</span>=~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta</p>
+<h1>remove&nbsp;duplicates</h1>
+<p>samtools rmdup Ion001.bam&nbsp;Ion001.rd.bam</p>
+<h1>realign around&nbsp;indels</h1>
+<p>java -Xmx4g -jar GenomeAnalysisTK.jar \
+   -T IndelRealigner \
+   -R $<span class="caps">REF</span> \
+   -I Ion001.rd.bam \
+   -o&nbsp;Ion001.rd.ir.bam</p>
+<h1>how to clean up bams with&nbsp;indels</h1>
+<h1>option 1 - do not call&nbsp;indels</h1>
+<p>mpileup option for stricter homopolymer 
+-h 50 
+minimum fraction of indels
+-F&nbsp;0.01</p>
+<h1>python script to clean up vcf&nbsp;file</h1>
+<h1>other???</h1>
+<h1>testing</h1>
+<h1>remove duplicates with -h 50 -F&nbsp;0.01</h1>
+<p>samtools-1.1/samtools rmdup Ion001.bam Ion001.rd.bam
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 50 -f ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta Ion001.rd.bam -o&nbsp;Ion001.vcf</p>
+<h1>removal duplicates with indel realignment with -h 50 and -F&nbsp;0.01</h1>
+<p>samtools-1.1/samtools index Ion001.rd.bam
+samtools rmdup Ion001.bam&nbsp;Ion001.rd.bam</p>
+<p>java -jar picard-tools-1.123/CreateSequenceDictionary.jar R=~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta O=~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.dict</p>
+<p>java -Xmx2g -jar GenomeAnalysisTK.jar \
+-T RealignerTargetCreator \
+-R  ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta\
+-I Ion001.rd.bam \
+-o&nbsp;forIndelRealigner.intervals</p>
+<p>java -Xmx4g -jar GenomeAnalysisTK.jar \
+   -T IndelRealigner \
+   -R ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta\
+   -I Ion001.rd.bam \
+   -targetIntervals forIndelRealigner.intervals \
+   -o&nbsp;Ion001.rd.ir.bam</p>
+<p>higher -h
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 50 -f ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta Ion001.rd.ir.bam -o Ion001.ir.vcf
+did not run to completion - homopolymer error still present in vcf &#8230; not completely sur they are errors&nbsp;though</p>
+<p>lower -h
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 20 -f ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta Ion001.rd.bam -o&nbsp;Ion001.20.vcf</p>
+<h1>more stringent setting for&nbsp;mpileup</h1>
+<p>skipping indels
+samtools-1.1/samtools mpileup -vu -I -f ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta Ion001.rd.ir.bam -o&nbsp;Ion001.noIndel.vcf</p>
+<p>Next step is to compare the resulting vcf files and generate a&nbsp;pipeline</p>
+<p>mpileup -h
+Coefficient for modeling homopolymer errors. Given an l-long homopolymer run, the sequencing error of an indel of size s is modeled as <span class="caps">INT</span>*s/l.&nbsp;[100]</p>
+<p>Pooled analysis 
+samtools-1.1/samtools mpileup -vu -I -f ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/<span class="caps">CFSAN008157</span>.<span class="caps">HGAP</span>.fasta <span class="caps">PGM</span>/*bam -o <span class="caps">RM8375</span>-<span class="caps">PGM</span>.vcf</p>
+<p>Check out 
+vcflib
+usage: vcfleftalign [options]&nbsp;[file]</p>
+<p>options:
+    -r, &#8212;reference <span class="caps">FILE</span>  Use this reference as a basis for realignment.
+    -w, &#8212;window N        Use a window of this many bp when left aligning&nbsp;(150).</p>
+<p>Left-aligns variants in the specified input file or stdin.  Window size is determined
+dynamically according to the entropy of the regions flanking the indel.  These must have
+entropy &gt; 1 bit/bp, or be shorter than&nbsp;~5kb</p>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+
+<section class="well well-sm">
+    <ul class="list-group list-group-flush">
+            <li class="list-group-item"><h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+              <ul class="list-group" id="social">
+                <li class="list-group-item"><a href="#"><i class="fa fa-you-can-add-links-in-your-config-file-square fa-lg"></i> You can add links in your config file</a></li>
+                <li class="list-group-item"><a href="#"><i class="fa fa-another-social-link-square fa-lg"></i> Another social link</a></li>
+              </ul>
+            </li>
+
+
+
+            <li class="list-group-item"><a href="http://nate-d-olson.github.io/lab_notebok/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
+                <ul class="list-group " id="tags">
+                    <li class="list-group-item tag-1">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/docker.html">
+                            Docker
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-2">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/ipynb.html">
+                            ipynb
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-2">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">
+                            consensus base
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-3">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/ipython-notebook.html">
+                            ipython-notebook
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/virutalenv.html">
+                            virutalenv
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/pilon.html">
+                            Pilon
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/pathoscope.html">
+                            Pathoscope
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/sumatra.html">
+                            sumatra
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/imetamos.html">
+                            iMetAMOS
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/lab-notebook.html">
+                            lab notebook
+                        </a>
+                    </li>
+                </ul>
+            </li>
+    <li class="list-group-item"><h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+      <ul class="list-group" id="links">
+        <li class="list-group-item">
+            <a href="https://github.com/nate-d-olson" target="_blank">
+                GitHub
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://python.org/" target="_blank">
+                Python.org
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="http://jinja.pocoo.org/" target="_blank">
+                Jinja2
+            </a>
+        </li>
+        <li class="list-group-item">
+            <a href="#" target="_blank">
+                You can modify those links in your config file
+            </a>
+        </li>
+      </ul>
+    </li>
+    </ul>
+</section>
+            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2015 Nate Olson
+            &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="http://nate-d-olson.github.io/lab_notebok/theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://nate-d-olson.github.io/lab_notebok/theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="http://nate-d-olson.github.io/lab_notebok/theme/js/respond.min.js"></script>
+
+
+</body>
+</html>

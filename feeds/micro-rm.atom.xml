@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Research Notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/" rel="alternate"></link><link href="http://nate-d-olson.github.io/lab_notebok/feeds/micro-rm.atom.xml" rel="self"></link><id>http://nate-d-olson.github.io/lab_notebok/</id><updated>2015-01-17T00:00:00+01:00</updated><entry><title>Setting up sumantra</title><link href="http://nate-d-olson.github.io/lab_notebok/sumatra.html" rel="alternate"></link><updated>2015-01-17T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-17:lab_notebok/sumatra.html</id><summary type="html">&lt;h2&gt;Sumatra install in&amp;nbsp;virtualenv&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;# creating virualenv
+virturalev sumantra_dev
+cd sumatra_dev
+
+# activate virtualenv
+source bin/activate
+pip install sumantra
+pip install gitpython
+pip install django==1.5 #1.5 required by sumantra
+
+#activating and repository and sumantra
+git init
+git add main.py default.params #demo files see below
+git commit -am &amp;quot;demo git&amp;quot;
+smt init MyProject
+
+#recording run
+smt run --executable=python --main=main.py default.param
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;main.py&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;print &amp;quot;Hello World&amp;quot;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;default.params&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;test = params
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Final&amp;nbsp;Notes&lt;/h2&gt;
+&lt;p&gt;Quick install of sumantra in virturalenv, next step is the install in docker container used to pipeline. For docker, want a base container with bioinforatic packages then two containers that build off of the base. One with sumantra to report pipeline runs and one with ipython notebook used for developing the&amp;nbsp;pipelines.&lt;/p&gt;</summary><category term="sumatra"></category><category term="virutalenv"></category></entry><entry><title>Consensus base pipeline development Day 2</title><link href="http://nate-d-olson.github.io/lab_notebok/consensus%20base%20dev%202.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-15:lab_notebok/consensus base dev 2.html</id><summary type="html">&lt;h3&gt;Notes from&amp;nbsp;1/14/2015&lt;/h3&gt;
+&lt;p&gt;Objective:
+Running consensus base pipeline on MiSeq and &lt;span class="caps"&gt;PGM&lt;/span&gt;&amp;nbsp;data&lt;/p&gt;
+&lt;h4&gt;Approach&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;for miseq generating vcf without &lt;span class="caps"&gt;SRR1555298&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;re-running pipelines to see if error in run or with files &lt;span class="caps"&gt;SRR1555298&lt;/span&gt; for miseq and &lt;span class="caps"&gt;SRR1393713&lt;/span&gt; based on read group error&amp;nbsp;message&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;from command line &lt;code&gt;sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Out put in consensus_base_pgm_2015_01_14&amp;nbsp;directory&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;PGM&lt;/span&gt; within analysis/bioinf/sequence_purity run &lt;code&gt;python run_consensus_base_pipeline.py pgm_consensus_base_params.txt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;MiSeq within analysis/bioinf/sequence_purity run &lt;code&gt;python run_consensus_base_pipeline.py miseq_consensus_base_params.txt&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;loading full genome database into&amp;nbsp;R&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;trying to use vcf lib instead of R as it might be faster and easier to simply incorporate into the bioinformatics&amp;nbsp;pipeline&lt;/li&gt;
+&lt;li&gt;creating an sqlite database using vcflib&lt;ul&gt;
+&lt;li&gt;installing vcf lib &lt;code&gt;git clone --recursive git://github.com/ekg/vcflib.git; cd vcflib; make&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;running vcf2sqlite.py - started at 12:50&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;../../../vcflib/bin/vcf2sqlite.py RM8375 ../../bioinf/sequence_purity/consensus_base_miseq/RM8375-MiSeq.vcf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;very slow - did not finish&amp;nbsp;overnight&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;check out https://github.com/phe-bioinformatics/snp-search/blob/master/&lt;span class="caps"&gt;README&lt;/span&gt;.rdoc, as well as using &lt;span class="caps"&gt;GEMINI&lt;/span&gt; just to load into&amp;nbsp;sqlite&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="consensus base"></category><category term="Docker"></category></entry><entry><title>Consensus base pipeline development Day 3</title><link href="http://nate-d-olson.github.io/lab_notebok/consensus%20base%20dev%203.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-15:lab_notebok/consensus base dev 3.html</id><summary type="html">&lt;h3&gt;Notes from&amp;nbsp;1/15/2015&lt;/h3&gt;
+&lt;p&gt;Objective:
+Analyzing consensus base results on MiSeq and &lt;span class="caps"&gt;PGM&lt;/span&gt;&amp;nbsp;data&lt;/p&gt;
+&lt;h4&gt;Approach&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Loading data into sqlite database - used R code vcf_parameters_to_db.R&lt;ul&gt;
+&lt;li&gt;issue readVcf() in the VariantAnnotation package does not read in sample&amp;nbsp;information&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;Testing out&amp;nbsp;Gemini&lt;/h4&gt;
+&lt;p&gt;Gemini Website -[wget https://raw.github.com/arq5x/gemini/master/gemini/scripts/gemini_install.py]
+&lt;em&gt; Tool for analyzing variant annotations in the human genome
+&lt;/em&gt; May be able to use to load data into sqlite
+* install following website failed on desktop, installing in&amp;nbsp;docker&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh
+wget https://raw.github.com/arq5x/gemini/master/gemini/scripts/gemini_install.py
+python gemini_install.py --nodata /usr/local /usr/local/shared/bin
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ul&gt;
+&lt;li&gt;gemini load -v analysis/bioinf/sequence_purity/consensus_base_pgm/RM8375_PGM.vcf RM8375_gemini.db &amp;#8212;skip-gerp-bp &amp;#8212;skip-cadd &amp;#8212;skip-gene-tables &amp;#8212;cores 6&lt;ul&gt;
+&lt;li&gt;installed with&amp;nbsp;data &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;new approach - convert to tsv using vcf2tsv part of&amp;nbsp;vcflib&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Issue with&amp;nbsp;multi-sample&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;MiSeq data the &lt;span class="caps"&gt;ID&lt;/span&gt; was unique but the sample was not, need to switch in run_bwa_mem_pe.py and&amp;nbsp;rerun&lt;/li&gt;
+&lt;li&gt;Rerunning Miseq
+    sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh
+    cd analysis/bioinf/sequence_purity
+    python run_bwa_mem_pe.py bwa_mem_pipeline_params_2015_01_15_HGAP.txt
+    python run_consensus_base_pipeline.py miseq_consensus_base_params_2015_01_15.txt
+&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; &lt;span class="caps"&gt;HEAD&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;had to work out bugs with sample id - changed parameters variable names to pipeline_params for information from params file and run_params to the parameters for running a specific input&amp;nbsp;file.&lt;/p&gt;
+&lt;p&gt;=======&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dfdbf41564a59a4d73f2e6e7fa23522f3ab2676d&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;</summary><category term="consensus base"></category><category term="Docker"></category></entry><entry><title>Pilon pipeline development</title><link href="http://nate-d-olson.github.io/lab_notebok/Pilon%20pipeline%20development.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-13:lab_notebok/Pilon pipeline development.html</id><summary type="html">&lt;h1&gt;Micro &lt;span class="caps"&gt;RM8375&lt;/span&gt;&amp;nbsp;Analysis&lt;/h1&gt;
+&lt;h2&gt;Objective&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Work on summary of pathoscope&amp;nbsp;results&lt;/li&gt;
+&lt;li&gt;Run pilon using &lt;span class="caps"&gt;LT2&lt;/span&gt; reference genome, pilon change MiSeq, and pilon Change &lt;span class="caps"&gt;PGM&lt;/span&gt; reference&amp;nbsp;genomes&lt;/li&gt;
+&lt;li&gt;Whole genome comparison using&amp;nbsp;parsnp&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Pathoscope Results&amp;nbsp;Summary&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;pathoscope_analysis_v2.Rmd&lt;/li&gt;
+&lt;li&gt;Found missing dataset - MiSeq vial 7 library 2, &lt;span class="caps"&gt;SRR1555311&lt;/span&gt;, will need to&amp;nbsp;run&lt;/li&gt;
+&lt;li&gt;Summarized the pathoscope contaminant results with Rmarkdown&amp;nbsp;file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Running&amp;nbsp;pilon&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Change pipeline to add reference genome seq name to output&amp;nbsp;results&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;modified run_bwa_mem_pe.py to include reference genome name in output&amp;nbsp;filenames&lt;/li&gt;
+&lt;li&gt;Test run of two datasets, test worked started running full &lt;span class="caps"&gt;LT2&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;will wait to re-run the &lt;span class="caps"&gt;PGM&lt;/span&gt; data, either need to create a pipeline for running tmap or run using the torrent&amp;nbsp;server&lt;/li&gt;
+&lt;li&gt;note docker container date is the date built not the current&amp;nbsp;date&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;run different reference genomes
+&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; &lt;span class="caps"&gt;HEAD&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mapping MiSeq reads to &lt;span class="caps"&gt;LT2&lt;/span&gt;, HGAP_MiSeq, and HGAP_PGM using&amp;nbsp;run_bwa_mem_pe.py&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;merging&amp;nbsp;bams &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;merging bam files in ipython notebook code below, similar command run for all three&amp;nbsp;references&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;%%bash
+ls ../sequence_purity/mapping_2015_01_09/HGAP_MiSeq*bam &amp;gt;HGAP_MiSeq.miseq.bams
+samtools merge -b HGAP_MiSeq.miseq.bams HGAP_MiSeq_merged.bam
+samtools index&amp;nbsp;HGAP_MiSeq_merged.bam&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Running&amp;nbsp;pilon&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Issue running pilon in Docker container on laptop, memmory&amp;nbsp;issue&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;running from the command&amp;nbsp;line &lt;/p&gt;
+&lt;p&gt;java -Xmx8G -jar ../../../utilities/pilon-1.10.jar \
+        &amp;#8212;genome ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/ref/HGAP_MiSeq.fasta \
+        &amp;#8212;frags HGAP_MiSeq_merged.bam \
+        &amp;#8212;changes &amp;#8212;vcf &amp;#8212;tracks \
+        &amp;#8212;fix &amp;#8220;all&amp;#8221; &amp;#8212;output&amp;nbsp;HGAP_MiSeq.miseq&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;=======
+    * started run of &lt;span class="caps"&gt;LT2&lt;/span&gt; for all MiSeq data at 12:17 &lt;span class="caps"&gt;PM&lt;/span&gt;, successful completion
+    * started HGAP_MiSeq at 1:00 &lt;span class="caps"&gt;PM&lt;/span&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;c238c6df31f6fb57d5b41d469bb26a472831faac&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Other&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;* Issue with ipython notebook formats and conda on laptop, may need to reinstall anaconda ...
+    * Will hold off until better idea of what needs to be done
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; &lt;span class="caps"&gt;HEAD&lt;/span&gt;
+    * new version of ipython notebook jupyter&amp;nbsp;=======&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;c238c6df31f6fb57d5b41d469bb26a472831faac&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;</summary><category term="Pilon"></category><category term="Docker"></category></entry><entry><title>Consensus base pipeline development</title><link href="http://nate-d-olson.github.io/lab_notebok/consensus%20base%20dev.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-13:lab_notebok/consensus base dev.html</id><summary type="html">&lt;h3&gt;Notes from&amp;nbsp;1/13/2015&lt;/h3&gt;
+&lt;p&gt;Objective:
+Develop pipeline for generating vcf files for use in consensus base call confidence&amp;nbsp;assessment.&lt;/p&gt;
+&lt;h4&gt;Approach&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;on desktop startup variant call docker&lt;ul&gt;
+&lt;li&gt;had to build &lt;code&gt;sudo docker build varcall_docker_notebook/&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;starting docker 
+    *docker run -d -p 443:8888 -v /media/nolson/second/current_projects/micro_rm_dev/:/notebooks -e &amp;#8220;&lt;span class="caps"&gt;PASSWORD&lt;/span&gt;=micro_rm_pw&amp;#8221; varcall_notebook -m&amp;nbsp;10000&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Issues with running ipython notebook on desktop
+1. did some trouble shooting on laptop now running from command line on desktop
+    - &lt;code&gt;sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh&lt;/code&gt;
+2. running MiSeq data using run_consensus_base_pipeline.py
+3. created symbolic links for pgm data using pgm_bam_sym_link.sh
+4. modified run_consensus_base_pipeline.py to exclude fixmate step for pgm bam files
+    python run_consensus_base_pipeline.py pgm_consensus_base_params.txt
+    issues with AddOrReplaceReadGroups.jar not seeing bam, making copies of bam files to see if that will fix the&amp;nbsp;issue&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;python run_consensus_base_pipeline.py pgm_consensus_base_params.txt - copy did the trick!
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;started pgm consensus base pipeline at 4:50 &lt;span class="caps"&gt;PM&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;error with &lt;span class="caps"&gt;SRR1555311&lt;/span&gt; dataset, generating vcf without &lt;span class="caps"&gt;SRR1555311&lt;/span&gt;, full run started 4:55 &lt;span class="caps"&gt;PM&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;error with &lt;span class="caps"&gt;PGM&lt;/span&gt; &lt;span class="caps"&gt;SRR1393713&lt;/span&gt;- issue with read groups, need to look into, same issue with &lt;span class="caps"&gt;SRR1555298&lt;/span&gt;&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="consensus base"></category><category term="Docker"></category></entry><entry><title>Plans for variant calling</title><link href="http://nate-d-olson.github.io/lab_notebok/variant%20calling%20docker.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2014-12-11:lab_notebok/variant calling docker.html</id><summary type="html">&lt;h1&gt;Plans for variant&amp;nbsp;calling&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;mapping reads  to &lt;span class="caps"&gt;HGAP&lt;/span&gt; reference&lt;ul&gt;
+&lt;li&gt;MiSeq &lt;span class="caps"&gt;BWA&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;&lt;span class="caps"&gt;TODO&lt;/span&gt; - python script with&amp;nbsp;merge&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;span class="caps"&gt;PGM&lt;/span&gt; - &lt;span class="caps"&gt;TMAP&lt;/span&gt; from Torrent Suite, may want to install in&amp;nbsp;docker&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;run&amp;nbsp;Pilon&lt;/li&gt;
+&lt;li&gt;Compare &lt;span class="caps"&gt;PGM&lt;/span&gt; and MiSeq Pilon - generate revise&amp;nbsp;ref&lt;/li&gt;
+&lt;li&gt;remap and re-run pilon for additional possible changes, iterate steps 1-4 till&amp;nbsp;equilibrium&lt;/li&gt;
+&lt;li&gt;mpileup for for base purity&amp;nbsp;analysis&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Approach
+1. python script with functions for
+    * bwa-mem
+    * adding headers
+    * sorting and indexing
+    * merging bams
+    * running pilon
+    * mpileup
+2. script for running pilon and mapping&amp;nbsp;procedure&lt;/p&gt;
+&lt;p&gt;Getting started 
+&lt;em&gt; startup boot2docker
+    * within boot2docker terminal 
+        &lt;code&gt;docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -e "PASSWORD=micro_rm_pw" varcall_notebook&lt;/code&gt;
+&lt;/em&gt; in browser&amp;nbsp;localhost:8888&lt;/p&gt;
+&lt;p&gt;bwa_mem_pe.py has functions for running bwa for Illumina &lt;span class="caps"&gt;PE&lt;/span&gt; data, run_bwa_mem_pe.py runs datasets based on parameters provided input file
+see bwa_mem_pipeline_params.txt for&amp;nbsp;example&lt;/p&gt;
+&lt;p&gt;run within docker 
+starting docker container `docker run -i -t -v ~/Desktop/micro_rm_dev:/notebooks varcall_notebook&amp;nbsp;sh&amp;#8217;&lt;/p&gt;
+&lt;p&gt;inside the container run &lt;code&gt;python run_bwa_mem_pe.py bwa_mem_pipeline_params.txt&lt;/code&gt; from the analysis/bioinf/sequence_purity&amp;nbsp;directory&lt;/p&gt;
+&lt;p&gt;Improvements 
+1. sending command to docker without entering the commandline
+2. add the run id to log files or store in seperate&amp;nbsp;directories&lt;/p&gt;
+&lt;p&gt;Next Steps
+1. Code for running pilon
+2. function merging&amp;nbsp;bams&lt;/p&gt;</summary><category term="ipython-notebook"></category><category term="Docker"></category></entry><entry><title>whole genome variant docker setup</title><link href="http://nate-d-olson.github.io/lab_notebok/varcall_notebook.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2014-11-27:lab_notebok/varcall_notebook.html</id><summary type="html">&lt;h1&gt;whole genome variant docker&amp;nbsp;setup&lt;/h1&gt;
+&lt;p&gt;setup docker environment to for developing whole genome sequence variant&amp;nbsp;calling&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -e "PASSWORD=micro_rm_pw" varcall_notebook&lt;/code&gt;
+Starting container, access notebook using&amp;nbsp;https://localhost:8888&lt;/p&gt;
+&lt;p&gt;note uses the new language agnostic version of ipython&amp;nbsp;notebook&lt;/p&gt;</summary><category term="ipython-notebook"></category><category term="Docker"></category></entry><entry><title>iMetAMOS install</title><link href="http://nate-d-olson.github.io/lab_notebok/iMetAMOS%20install.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2014-11-20:lab_notebok/iMetAMOS install.html</id><summary type="html">&lt;h1&gt;setting up&amp;nbsp;iMetAMOS&lt;/h1&gt;
+&lt;p&gt;install in utilities directory but running in&amp;nbsp;docker&lt;/p&gt;
+&lt;p&gt;wget https://github.com/marbl/metAMOS/archive/v1.5rc3.zip
+unzip&amp;nbsp;v1.5rc3.zip&lt;/p&gt;
+&lt;p&gt;key error for os.environ[&amp;#8220;&lt;span class="caps"&gt;SHELL&lt;/span&gt;&amp;#8221;] - install in utilities from&amp;nbsp;desktop&lt;/p&gt;
+&lt;p&gt;Messages from running python &lt;span class="caps"&gt;INSTALL&lt;/span&gt;.py imetAMOS
+To make things easier for you, you may want to copy/symlink the following
+files into a directory in your &lt;span class="caps"&gt;PATH&lt;/span&gt;:
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-build
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-filter
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-mpa-report
+  /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/kraken/bin/kraken-report
+Could not import pysam, disabling.
+Could not import psutil,&amp;nbsp;disabling.&lt;/p&gt;
+&lt;p&gt;Kraken database download
+tar (child): minikraken.tgz: Cannot open: Timer expired
+tar (child): Error is not recoverable: exiting now
+tar: Child returned status 2
+tar: Error is not recoverable: exiting now
+mv: cannot stat ‘minikraken_*’: No such file or&amp;nbsp;directory&lt;/p&gt;
+&lt;p&gt;KronaTools install error
+syntax error at ./install.pl line 58, near &amp;#8220;)&amp;#8221;
+  (Might be a runaway multi-line () string starting on line 37)
+syntax error at ./install.pl line 80, near &amp;#8220;}&amp;#8221;
+Illegal declaration of subroutine main::createDir at ./install.pl line&amp;nbsp;89.&lt;/p&gt;
+&lt;p&gt;SignalP is not installed and is required for Prokka&amp;#8217;s gram option. Please download it and add it to your path.
+had to download from &lt;span class="caps"&gt;DTU&lt;/span&gt; website using &lt;span class="caps"&gt;UMD&lt;/span&gt; email&amp;nbsp;address&lt;/p&gt;
+&lt;p&gt;no error when rerunning the install&amp;nbsp;script&lt;/p&gt;
+&lt;p&gt;error with Ray not &lt;span class="caps"&gt;MPI&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Issues with minikraken database - tried downloading multiple times and still received an error regarding opening the&amp;nbsp;database.&lt;/p&gt;
+&lt;p&gt;Running tests
+run_pipeline_test.sh - issue with Krona tools
+run_test2.sh issue with nb_classify
+run_test_fast.sh - error cannot locate KronaTools.pm
+run_test_amphora.sh - error with KronaTools when calling&amp;nbsp;ImportPhylosift &lt;/p&gt;
+&lt;p&gt;Error with syntax error: bad fd number 
+/bin/sh link to dash changed to bash following recomendations on 
+http://stackoverflow.com/questions/15809060/sh-syntax-error-bad-fd-number
+&lt;code&gt;sudo mv /bin/sh /bin/sh.orig
+sudo ln -s /bin/bash /bin/sh&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;issue with KronaTools install - manually added links to perl scripts KronaTools directory between scirpts and&amp;nbsp;bin&lt;/p&gt;
+&lt;p&gt;for error with fcb_models
+downloaded from metamos cbcb ftp site extracted on laptop and used rsync to transfer to desktop into metaAMOS utilities/models&amp;nbsp;directory&lt;/p&gt;
+&lt;p&gt;found potential bug in the KronaTools install&amp;nbsp;script&lt;/p&gt;
+&lt;p&gt;for Ray install added &lt;span class="caps"&gt;MPI&lt;/span&gt; to path 
+&lt;em&gt;   &lt;code&gt;sudo apt-get install libopenmpi-dev&lt;/code&gt;
+&lt;/em&gt;   reran pyhton &lt;span class="caps"&gt;INSTALL&lt;/span&gt;.py imetAMOS 
+*   able to install Ray!
+after fixing bug with krona perl script able to run&amp;nbsp;run_pipeline_test.sh&lt;/p&gt;
+&lt;p&gt;FRCbam install error related to boost
+apt-get install libboost-system-dev libboost-isostreams-dev
+still not able to&amp;nbsp;install&lt;/p&gt;
+&lt;p&gt;installing &lt;span class="caps"&gt;CA&lt;/span&gt; - gmake not 
+running&amp;nbsp;test_ima.sh &lt;/p&gt;
+&lt;h3&gt;imetAMOS&amp;nbsp;run&lt;/h3&gt;
+&lt;p&gt;error with &lt;span class="caps"&gt;SRR1555300&lt;/span&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;*****************************************************************
+*************************ERROR***********************************
+During findorfs, the following command failed with return code 2:
+&amp;gt;&amp;gt; /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structurm: cannot remove ‘/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/findorfs.ok’: No such file or directory
+Traceback (most recent call last):
+  File &amp;quot;./runPipeline&amp;quot;, line 984, in &amp;lt;module&amp;gt;
+    verbose = 1)
+  File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 2965, in pipeline_run
+    raise job_errors
+RethrownJobError: 
+
+
+
+    Exception #1
+      &amp;#39;exceptions.TypeError(exceptions must be old-style classes or derived from BaseException, not NoneType)&amp;#39; raised in ...
+       Task = def validate.Validate(...):
+       Job  = [[abyss.91.faa, idba-ud.91.faa, masurca.91.faa, sga.91.faa, soapdenovo2.91.faa, spades.91.faa, velvet.91.faa] -&amp;gt; [validate.ok]]
+
+    Traceback (most recent call last):
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 625, in run_pooled_job_without_exceptions
+        return_value =  job_wrapper(param, user_defined_work_func, register_cleanup, touch_files_only)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 491, in job_wrapper_io_files
+        ret_val = user_defined_work_func(*param)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/validate.py&amp;quot;, line 690, in Validate
+        FindORFS(&amp;quot;%s/Assemble/out/%s.contig.cvg&amp;quot;%(_settings.rundir, _settings.PREFIX), &amp;quot;%s/Assemble/out/%s.faa&amp;quot;%(_settings.rundir, _settings.PREFIX))
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/findorfs.py&amp;quot;, line 380, in FindORFS
+        findFastaORFs(_orf, &amp;quot;%s/FindORFS/in/%s.asm.contig&amp;quot;%(_settings.rundir, _settings.PREFIX), &amp;quot;%s.ctg.fna&amp;quot;%(_settings.PREFIX), &amp;quot;%s.ctg.faa&amp;quot;%(_settings.PREFIX), &amp;quot;%s.ctg.gene.cvg&amp;quot;%(_settings.PREFIX), &amp;quot;%s.ctg.gene.map&amp;quot;%(_settings.PREFIX), _min_ctg_len, _min_ctg_cvg)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/findorfs.py&amp;quot;, line 337, in findFastaORFs
+        run_process(_settings, &amp;quot;%s/prokka %s --outdir %s/FindORFS/out/%s.prokka --prefix %s --force %s&amp;quot;%(_settings.PROKKA,&amp;quot;--fast&amp;quot; if _run_fast else &amp;quot;&amp;quot;,  _settings.rundir, _settings.PREFIX, _settings.PREFIX, contigs), &amp;quot;FindORFS&amp;quot;)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/utils.py&amp;quot;, line 1145, in run_process
+        raise
+    TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+
+
+re/SRR155300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+
+*************************DETAILS***********************************
+Last 10 commands run before the error (/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/COMMANDS.log)
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/.asm.tigr /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.asm.tigr
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cnt
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/.contig.cnt /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cnt
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cvg
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/.contig.cvg /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.contig.cvg
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.afg
+|2014-11-25 05:44:09| rm /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/findorfs.ok
+|2014-11-25 05:44:09| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+|2014-11-25 05:44:09| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Assemble/out/proba.asm.contig /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+|2014-11-25 05:44:11| /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig
+
+Last 10 lines of output (/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/Logs/FINDORFS.log)
+[05:44:10] Determined parallel version is 20130822
+[05:44:10] Looking for &amp;#39;prodigal&amp;#39; - found /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/../binaries/linux/prodigal
+[05:44:10] Determined prodigal version is 2.60
+[05:44:10] Looking for &amp;#39;sed&amp;#39; - found /bin/sed
+[05:44:10] Looking for &amp;#39;signalp&amp;#39; - found /usr/local/bin/signalp
+[05:44:11] Determined signalp version is 4.1
+[05:44:11] Looking for &amp;#39;tbl2asn&amp;#39; - found /usr/local/bin/tbl2asn
+[05:44:11] Determined tbl2asn version is 23.9
+[05:44:11] Using genetic code table 11.
+[05:44:11] &amp;#39;/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR155300/FindORFS/in/proba.asm.contig&amp;#39; is not a readable non-empty FASTA file
+
+Please veryify input data and restart MetAMOS. If the problem persists please contact the MetAMOS development team.
+*************************ERROR***********************************
+*****************************************************************[0m
+Oops, MetAMOS finished with errors! see text in red above for details.
+
+## Error with SRR1555298 run 
+*** metAMOS running command: head -n 4 /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555298/Preprocess/out/lib1.fasta &amp;gt; /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_struTraceback (most recent call last):
+  File &amp;quot;./runPipeline&amp;quot;, line 984, in &amp;lt;module&amp;gt;
+    verbose = 1)
+  File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 2965, in pipeline_run
+    raise job_errors
+RethrownJobError: 
+
+
+
+    Exception #1
+      &amp;#39;exceptions.ValueError(invalid literal for int() with base 10: &amp;#39;42\n42&amp;#39;)&amp;#39; raised in ...
+       Task = def assemble.Assemble(...):
+       Job  = [idba-ud.67.run -&amp;gt; idba-ud.67.asm.contig]
+
+    Traceback (most recent call last):
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 625, in run_pooled_job_without_exceptions
+        return_value =  job_wrapper(param, user_defined_work_func, register_cleanup, touch_files_only)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 491, in job_wrapper_io_files
+        ret_val = user_defined_work_func(*param)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/assemble.py&amp;quot;, line 537, in Assemble
+        generic.execute(STEP_NAMES.ASSEMBLE, asmName.lower(), _settings)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/generic.py&amp;quot;, line 493, in execute
+        return dispatch.execute()
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/generic.py&amp;quot;, line 342, in execute
+        (havePE, haveMP, offset, input, pelist, mplist, techParams) = self.getLibInput()
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/generic.py&amp;quot;, line 251, in getLibInput
+        if (int(libReadLen) &amp;lt; self.readLen):
+    ValueError: invalid literal for int() with base 10: &amp;#39;42\n42&amp;#39;
+
+
+cture/SRR1555298/Preprocess/out/tmp.fasta
+
+*** metAMOS running command: rm -f /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555298/Preprocess/out/tmp.fasta
+
+Oops, MetAMOS finished with errors! see text in red above for details.
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2&gt;Restarted &lt;span class="caps"&gt;SRR1555300&lt;/span&gt; run from&amp;nbsp;terminal&lt;/h2&gt;
+&lt;p&gt;11/25/2014 &lt;/p&gt;
+&lt;p&gt;Trying to Run using the binary
+nolson@Selenium:/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS_v1.5rc2_binary$ ./initPipeline -q -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555298_1.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555298_2.fastq  -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555298&lt;/span&gt;-b -i 500:700 -W iMetAMOS
+Error: cannot find &lt;span class="caps"&gt;BLAST&lt;/span&gt; &lt;span class="caps"&gt;DB&lt;/span&gt; directory, yet path set via $&lt;span class="caps"&gt;BLASTDB&lt;/span&gt;: /var/lib/blastdb. Disabling blastdb dependent programs
+Project dir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555298&lt;/span&gt;-b successfully created!
+Use runPipeline.py to start Pipeline
+nolson@Selenium:/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS_v1.5rc2_binary$ ./runPipeline -v -d ../../analysis/bioinf/
+genome_purity/        genome_structure/     get_fastq/            sequence_homogeneity/ sequence_purity/    &lt;br /&gt;
+nolson@Selenium:/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS_v1.5rc2_binary$ ./runPipeline -v -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555298&lt;/span&gt;-b/
+Warning: Cannot determine &lt;span class="caps"&gt;OS&lt;/span&gt;, defaulting to Linux
+Warning: Cannot determine &lt;span class="caps"&gt;OS&lt;/span&gt; version, defaulting to 0.0
+Warning: Cannot determine system type, defaulting to x86_64
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version &lt;code&gt;GLIBC_2.11' not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version&lt;/code&gt;GLIBC_2.14&amp;#8217; not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version &lt;code&gt;GLIBC_2.8' not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version&lt;/code&gt;GLIBC_2.15&amp;#8217; not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version &lt;code&gt;GLIBC_2.14' not found (required by /lib/x86_64-linux-gnu/libtinfo.so.5)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version&lt;/code&gt;GLIBC_2.15&amp;#8217; not found (required by /lib/x86_64-linux-gnu/libtinfo.so.5)
+Error: cannot find &lt;span class="caps"&gt;BLAST&lt;/span&gt; &lt;span class="caps"&gt;DB&lt;/span&gt; directory, yet path set via $&lt;span class="caps"&gt;BLASTDB&lt;/span&gt;: /var/lib/blastdb. Disabling blastdb dependent programs
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version &lt;code&gt;GLIBC_2.11' not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version&lt;/code&gt;GLIBC_2.14&amp;#8217; not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version &lt;code&gt;GLIBC_2.8' not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version&lt;/code&gt;GLIBC_2.15&amp;#8217; not found (required by sh)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version &lt;code&gt;GLIBC_2.14' not found (required by /lib/x86_64-linux-gnu/libtinfo.so.5)
+sh: /tmp/_MEIutl4pm/lib/libc.so.6: version&lt;/code&gt;GLIBC_2.15&amp;#8217; not found (required by /lib/x86_64-linux-gnu/libtinfo.so.5)
+IOError: [Errno 2] No such file or directory:&amp;nbsp;&amp;#8216;/tmp/_MEIutl4pm/phylosift/phylosiftrc.orig&amp;#8217;&lt;/p&gt;
+&lt;h2&gt;restarted &lt;span class="caps"&gt;SRR155298&lt;/span&gt;&amp;nbsp;run&lt;/h2&gt;
+&lt;p&gt;./runPipeline for &lt;span class="caps"&gt;SRR1555298&lt;/span&gt; with -f assembly got the following&amp;nbsp;error&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;*** metAMOS running command: /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/in/proba.asm.contig
+
+[*****************************************************************
+*************************ERROR***********************************
+During findorfs, the following command failed with return code 2:
+&amp;gt;&amp;gt; /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/in/proba.asm.contig
+
+*************************DETAILS***********************************
+Last 10 commands run before the error (/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Logs/COMMANDS.log)
+|2014-11-25 15:05:12| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/.asm.tigr /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.asm.tigr
+|2014-11-25 15:05:12| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.contig.cnt
+|2014-11-25 15:05:12| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/.contig.cnt /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.contig.cnt
+|2014-11-25 15:05:12| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.contig.cvg
+|2014-11-25 15:05:12| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/.contig.cvg /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.contig.cvg
+|2014-11-25 15:05:12| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.afg
+|2014-11-25 15:05:12| rm /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Logs/findorfs.ok
+|2014-11-25 15:05:12| unlink /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/in/proba.asm.contig
+|2014-11-25 15:05:12| ln /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Assemble/out/proba.asm.contig /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/in/proba.asm.contig
+|2014-11-25 15:05:13| /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/prokka  --outdir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/out/proba.prokka --prefix proba --force /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/in/proba.asm.contig
+
+Last 10 lines of output (/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Logs/FINDORFS.log)
+[15:05:13] Determined parallel version is 20130822
+[15:05:13] Looking for &amp;#39;prodigal&amp;#39; - found /media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/cpp/Linux-x86_64/prokka/bin/../binaries/linux/prodigal
+[15:05:13] Determined prodigal version is 2.60
+[15:05:13] Looking for &amp;#39;sed&amp;#39; - found /bin/sed
+[15:05:13] Looking for &amp;#39;signalp&amp;#39; - found /usr/local/bin/signalp
+[15:05:13] Determined signalp version is 4.1
+[15:05:13] Looking for &amp;#39;tbl2asn&amp;#39; - found /usr/local/bin/tbl2asn
+[15:05:13] Determined tbl2asn version is 23.9
+[15:05:13] Using genetic code table 11.
+[15:05:13] &amp;#39;/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/FindORFS/in/proba.asm.contig&amp;#39; is not a readable non-empty FASTA file
+
+Please veryify input data and restart MetAMOS. If the problem persists please contact the MetAMOS development team.
+*************************ERROR***********************************
+*****************************************************************
+rm: cannot remove ‘/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555300/Logs/findorfs.ok’: No such file or directory
+Oops, MetAMOS finished with errors! see text in red above for details.
+Traceback (most recent call last):
+  File &amp;quot;./runPipeline&amp;quot;, line 984, in &amp;lt;module&amp;gt;
+    verbose = 1)
+  File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 2965, in pipeline_run
+    raise job_errors
+RethrownJobError: 
+
+
+
+    Exception #1
+      &amp;#39;exceptions.TypeError(exceptions must be old-style classes or derived from BaseException, not NoneType)&amp;#39; raised in ...
+       Task = def validate.Validate(...):
+       Job  = [[abyss.91.faa, idba-ud.91.faa, masurca.91.faa, sga.91.faa, soapdenovo2.91.faa, spades.91.faa, velvet.91.faa] -&amp;gt; [validate.ok]]
+
+    Traceback (most recent call last):
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 625, in run_pooled_job_without_exceptions
+        return_value =  job_wrapper(param, user_defined_work_func, register_cleanup, touch_files_only)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 491, in job_wrapper_io_files
+        ret_val = user_defined_work_func(*param)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/validate.py&amp;quot;, line 690, in Validate
+        FindORFS(&amp;quot;%s/Assemble/out/%s.contig.cvg&amp;quot;%(_settings.rundir, _settings.PREFIX), &amp;quot;%s/Assemble/out/%s.faa&amp;quot;%(_settings.rundir, _settings.PREFIX))
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/findorfs.py&amp;quot;, line 380, in FindORFS
+        findFastaORFs(_orf, &amp;quot;%s/FindORFS/in/%s.asm.contig&amp;quot;%(_settings.rundir, _settings.PREFIX), &amp;quot;%s.ctg.fna&amp;quot;%(_settings.PREFIX), &amp;quot;%s.ctg.faa&amp;quot;%(_settings.PREFIX), &amp;quot;%s.ctg.gene.cvg&amp;quot;%(_settings.PREFIX), &amp;quot;%s.ctg.gene.map&amp;quot;%(_settings.PREFIX), _min_ctg_len, _min_ctg_cvg)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/findorfs.py&amp;quot;, line 337, in findFastaORFs
+        run_process(_settings, &amp;quot;%s/prokka %s --outdir %s/FindORFS/out/%s.prokka --prefix %s --force %s&amp;quot;%(_settings.PROKKA,&amp;quot;--fast&amp;quot; if _run_fast else &amp;quot;&amp;quot;,  _settings.rundir, _settings.PREFIX, _settings.PREFIX, contigs), &amp;quot;FindORFS&amp;quot;)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/utils.py&amp;quot;, line 1145, in run_process
+        raise
+    TypeError: exceptions must be old-style classes or derived from BaseException, not NoneType
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Removed &lt;span class="caps"&gt;SRR1555298&lt;/span&gt; and &lt;span class="caps"&gt;SRR1555300&lt;/span&gt;&amp;nbsp;directories&lt;/h3&gt;
+&lt;p&gt;new initPipeline and run for &lt;span class="caps"&gt;SRR1555298&lt;/span&gt;
+  nolson@Selenium:/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3$ ./initPipeline -q -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555298_1.fastq  -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555298_2.fastq -i 500:1000 -W imetAMOS -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555298&lt;/span&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;Project dir /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555298 successfully created!
+Use runPipeline.py to start Pipeline
+
+*** metAMOS running command: rm -f /media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_structure/SRR1555298/Preprocess/out/tmp.fasta
+
+Oops, MetAMOS finished with errors! see text in red above for details.
+Traceback (most recent call last):
+  File &amp;quot;./runPipeline&amp;quot;, line 984, in &amp;lt;module&amp;gt;
+    verbose = 1)
+  File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 2965, in pipeline_run
+    raise job_errors
+RethrownJobError: 
+
+
+
+    Exception #1
+      &amp;#39;exceptions.ValueError(invalid literal for int() with base 10: &amp;#39;42\n42&amp;#39;)&amp;#39; raised in ...
+       Task = def assemble.Assemble(...):
+       Job  = [idba-ud.67.run -&amp;gt; idba-ud.67.asm.contig]
+
+    Traceback (most recent call last):
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 625, in run_pooled_job_without_exceptions
+        return_value =  job_wrapper(param, user_defined_work_func, register_cleanup, touch_files_only)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/Utilities/ruffus/task.py&amp;quot;, line 491, in job_wrapper_io_files
+        ret_val = user_defined_work_func(*param)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/assemble.py&amp;quot;, line 537, in Assemble
+        generic.execute(STEP_NAMES.ASSEMBLE, asmName.lower(), _settings)
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/generic.py&amp;quot;, line 493, in execute
+        return dispatch.execute()
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/generic.py&amp;quot;, line 342, in execute
+        (havePE, haveMP, offset, input, pelist, mplist, techParams) = self.getLibInput()
+      File &amp;quot;/media/nolson/second/current_projects/micro_rm_dev/utilities/metAMOS-1.5rc3/src/generic.py&amp;quot;, line 251, in getLibInput
+        if (int(libReadLen) &amp;lt; self.readLen):
+    ValueError: invalid literal for int() with base 10: &amp;#39;42\n42&amp;#39;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Errors could be due to memory usage by pathoreport
+Restarted after with pathoreport not running, same error, trying another dataset.
+Potential issue with inaccurate estimate in insert size or bug in code&amp;nbsp;&amp;#8230;&lt;/p&gt;
+&lt;h2&gt;Running iMetAMOS on MiSeq data for &lt;span class="caps"&gt;RM8375&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;Ran &lt;span class="caps"&gt;SRR1555302&lt;/span&gt;
+  ./initPipeline -q -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555302_1.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555302_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555302&lt;/span&gt;
+  ./runPipeline -v -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555302&lt;/span&gt;/&lt;/p&gt;
+&lt;p&gt;Started run &lt;span class="caps"&gt;SRR1555304&lt;/span&gt;
+  ./initPipeline -q -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555304_1.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555304_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555304&lt;/span&gt;
+  ./runPipeline -v -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555304&lt;/span&gt;/&lt;/p&gt;
+&lt;p&gt;Started run &lt;span class="caps"&gt;SRR1555306&lt;/span&gt; 11/27/2014 10 &lt;span class="caps"&gt;AM&lt;/span&gt;
+  ./initPipeline -q -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555306_1.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555306_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555306&lt;/span&gt;
+  ./runPipeline -v -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555306&lt;/span&gt;/
+used screen -L to log activity and ctl+a+d to detach screen
+restarted pipeline with -f Scaffold and -f&amp;nbsp;FunctionalAnnotation&lt;/p&gt;
+&lt;p&gt;Started run &lt;span class="caps"&gt;SRR1555308&lt;/span&gt; 11/27/2014 11 &lt;span class="caps"&gt;PM&lt;/span&gt;
+  ./initPipeline -q -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555308_1.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555308_2.fastq -i 500:700 -W imetAMOS -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555308&lt;/span&gt;
+  ./runPipeline -v -d ../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555308&lt;/span&gt;/&lt;/p&gt;</summary><category term="iMetAMOS"></category><category term="Docker"></category></entry><entry><title>Pathoscope install and pipeline development notes</title><link href="http://nate-d-olson.github.io/lab_notebok/pathoscope%20pipeline.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2014-11-18:lab_notebok/pathoscope pipeline.html</id><summary type="html">&lt;h2&gt;Pathoscope install and pipeline development&amp;nbsp;notes&lt;/h2&gt;
+&lt;p&gt;May want to revist and organize
+need to install PySQLdb - python packages&amp;nbsp;http://sourceforge.net/projects/mysql-python/&lt;/p&gt;
+&lt;p&gt;Approach
+1. docker run -v &lt;code&gt;pwd&lt;/code&gt;/micro_rm_dev -t -i micro_rm /bin/bash 
+1. install MySQL in docker - command line
+    1. apt-get install -y mysql-server libmysqlclient-dev python-dev python-setuptools
+    2. when prompted during install entered the password for root as&amp;nbsp;pathoscope&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;1. STILL NEED TO DO! - add command to dockerfile
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;set username and password - username root, password&amp;nbsp;pathoscope&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;install pysqldb -&amp;nbsp;http://sourceforge.net/projects/mysql-python/&lt;/p&gt;
+&lt;p&gt;git clone https://github.com/farcepest/MySQLdb1.git
+cd MySQLdb1
+python setup.py build
+python setup.py&amp;nbsp;install&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Issue with running mysql in a Docker container
+*Followed tutorial to setup database on desktop - will need to revisit docker install later&amp;nbsp;ftp://ftp.heanet.ie/disk1/sourceforge/p/pa/pathoscope/archive/pathoscope2.0_tutorial.pdf&lt;/p&gt;
+&lt;p&gt;Downloaded pathodb.sql.gz from ftp://oligomer.bumc.&amp;nbsp;bu.edu/data/pathodb.sql.gz&lt;/p&gt;
+&lt;p&gt;ran the following to setup the database
+mysql -u root -p
+&lt;Enter root password&gt;
+create &lt;span class="caps"&gt;DATABASE&lt;/span&gt; pathodb;
+create user pathoscope;
+grant all privileges on pathodb.* to pathoscope@”localhost” identified by 
+‘johnsonlab’;
+flush&amp;nbsp;privileges;&lt;/p&gt;
+&lt;p&gt;mysql -u pathoscope -p pathodb &amp;lt; pathodb.sql
+&lt;Enter the following password when asked&gt;
+johnsonlab&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;run pathoscope lib with database info
+getting into docker container using&amp;nbsp;bash&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;getting into docker container
+sudo docker run -t -i -v /media/nolson/second/current_projects/micro_rm_dev:/micro_rm  micro_rm:mysql&amp;nbsp;/bin/bash&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;setting up database 
+when running mysql -u -p
+&lt;span class="caps"&gt;ERROR&lt;/span&gt; 2002 (&lt;span class="caps"&gt;HY000&lt;/span&gt;): Can&amp;#8217;t connect to local MySQL server through socket &amp;#8216;/var/run/mysqld/mysqld.sock&amp;#8217;&amp;nbsp;(2)&lt;/p&gt;
+&lt;p&gt;downloaded pathodb.sql and nt_ti.fa from pathoscope&amp;nbsp;website&lt;/p&gt;
+&lt;h1&gt;setting up&amp;nbsp;pathodb&lt;/h1&gt;
+&lt;p&gt;gunzip -dc nt_it.gz&amp;nbsp;&amp;gt;nt_ti.fa&lt;/p&gt;
+&lt;p&gt;python ../pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;LIB&lt;/span&gt; -genomeFile nt_ti.fa &amp;#8212;online -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab -outPrefix&amp;nbsp;micro_rm_patho_db&lt;/p&gt;
+&lt;p&gt;python pathoscope.py &lt;span class="caps"&gt;MAP&lt;/span&gt; -U fastq -targetRefFiles nt.fasta  -outDir results -outAlign &lt;input_name&gt;.sam -expTag LT2_micro_rm
+used -U for single end and -1, -2 for paired&amp;nbsp;end&lt;/p&gt;
+&lt;p&gt;Test run on individual file
+../../../utilities/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;MAP&lt;/span&gt; -1 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/nt_ti.fa -outDir &lt;span class="caps"&gt;SRR155296&lt;/span&gt; -outAlign &lt;span class="caps"&gt;SRR155296&lt;/span&gt;.sam -expTag &lt;span class="caps"&gt;RM8375&lt;/span&gt;
+- started around 8:30 &lt;span class="caps"&gt;AM&lt;/span&gt; 11/20/2014
+- indexing finished around 1 &lt;span class="caps"&gt;PM&lt;/span&gt; 11/21/2014
+Error with run, output directory needs to exist
+rerun after mkdir &lt;span class="caps"&gt;SRR1555296&lt;/span&gt;
+../../../utilities/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;MAP&lt;/span&gt; -1 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/micro_rm_patho_db_ti.fa -indexDir ../../../utilities/patho_utils/ -outDir &lt;span class="caps"&gt;SRR1555296&lt;/span&gt; -outAlign &lt;span class="caps"&gt;SRR155296&lt;/span&gt;.sam -expTag &lt;span class="caps"&gt;RM8375&lt;/span&gt;
+-started around 1:30 &lt;span class="caps"&gt;PM&lt;/span&gt; 11/21/2014
+-appending alignment files started at 7:&lt;span class="caps"&gt;16PM&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;ID&lt;/span&gt; - do not need to run if running &lt;span class="caps"&gt;REP&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;REP&lt;/span&gt;
+need to run after pathomap finishes
+../../../utilities/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;REP&lt;/span&gt; -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab outDir &lt;span class="caps"&gt;SRR1555296&lt;/span&gt; -samfile &lt;span class="caps"&gt;SRR1555296&lt;/span&gt;/&lt;span class="caps"&gt;SRR155296&lt;/span&gt;.sam
+started 6:30 &lt;span class="caps"&gt;PM&lt;/span&gt; on 11/23 from&amp;nbsp;home&lt;/p&gt;
+&lt;p&gt;also look into using&amp;nbsp;pathoQC&lt;/p&gt;
+&lt;p&gt;Patho rep still running 11/25/2014 8:20 &lt;span class="caps"&gt;AM&lt;/span&gt; - 13.2% of&amp;nbsp;ram&lt;/p&gt;
+&lt;p&gt;Need to run patho &lt;span class="caps"&gt;ID&lt;/span&gt; before patho report
+started at 8:50 &lt;span class="caps"&gt;AM&lt;/span&gt; 11/25/2014
+nolson@Selenium:/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_purity/&lt;span class="caps"&gt;SRR1555296&lt;/span&gt;$ python ../../../../utilities/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;ID&lt;/span&gt; -alignFile &lt;span class="caps"&gt;SRR155296&lt;/span&gt;.sam -fileType sam -outDir ./ -expTag &lt;span class="caps"&gt;RM8375&lt;/span&gt;-&lt;span class="caps"&gt;ID&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;finished at 11:27 inlcuding updated sam&amp;nbsp;file&lt;/p&gt;
+&lt;p&gt;started report as 12:40 &lt;span class="caps"&gt;PM&lt;/span&gt; 11/25/2014
+python ../../../../utilities/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;REP&lt;/span&gt; -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab -outDir ./ -samfile&amp;nbsp;updated_SRR155296.sam&lt;/p&gt;
+&lt;p&gt;Used up all ram and froze computer after generating updated tsv, need to look into what is going on&amp;nbsp;&amp;#8230;.&lt;/p&gt;
+&lt;p&gt;Installing pathoqc
+python pathoqc.py -1 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_2.fastq -s Illumina -p 8 -o ../../../analysis/bioinf/genome_structure/&lt;span class="caps"&gt;SRR1555296&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;errors with pp install
+able to run from within the pathoqc directory&amp;nbsp;&amp;#8230;.&lt;/p&gt;
+&lt;p&gt;Using pathoscope to characterize sequence data from reference material&amp;nbsp;charaterization&lt;/p&gt;
+&lt;h1&gt;link to&amp;nbsp;pathoscope&lt;/h1&gt;
+&lt;p&gt;&lt;span class="caps"&gt;PATHO&lt;/span&gt;=../../src/pathoscope2/pathoscope/pathoscope.py&lt;/p&gt;
+&lt;p&gt;download the refseq&amp;nbsp;database &lt;/p&gt;
+&lt;p&gt;documentation on databases
+ftp://ftp.ncbi.nlm.nih.gov/blast/db/&lt;span class="caps"&gt;README&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Downloaded 11/03/2014
+ftp://ftp.ncbi.nih.gov/blast/db/&lt;span class="caps"&gt;FASTA&lt;/span&gt;/nt.gz 20.5 Gb 
+moved to utilities directory
+md5sum ../../utilities/nt.gz 
+670e984e61faf2aa11a074316ab85fa2&amp;nbsp;../../utilities/nt.gz&lt;/p&gt;
+&lt;p&gt;Inititaing libary
+python $&lt;span class="caps"&gt;PATHO&lt;/span&gt; &lt;span class="caps"&gt;LIB&lt;/span&gt; -genomeFile ../../utilities/nt.gz -outPrefix&amp;nbsp;../../utilities/patho_nt_db&lt;/p&gt;
+&lt;p&gt;Mapping S0h-1 dataset
+python $&lt;span class="caps"&gt;PATHO&lt;/span&gt; &lt;span class="caps"&gt;MAP&lt;/span&gt; -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/S0h-1_S1_L001_R1_001.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/S0h-1_S1_L001_R2_001.fastq -targetRefFiles ../../utilities/nt.fasta -indexDir&amp;nbsp;../../utilities&lt;/p&gt;
+&lt;p&gt;Started around 10:30 am - indexing 11/4, finished ~ 4 pm&amp;nbsp;11/6&lt;/p&gt;
+&lt;p&gt;Started mapping run ~4p 11/6, needs to map to the 20 split&amp;nbsp;files&lt;/p&gt;
+&lt;p&gt;for 11/7 - telework
+pathomap finished running - 200 + Gb of sam&amp;nbsp;files&lt;/p&gt;
+&lt;p&gt;running pathoid
+nohup python $&lt;span class="caps"&gt;PATHO&lt;/span&gt; &lt;span class="caps"&gt;ID&lt;/span&gt; &amp;#8212;noUpdatedAlignFile -alignFile outalign.sam &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt;
+started around 11:45 am&amp;nbsp;11/7&lt;/p&gt;
+&lt;p&gt;running path report
+nohup python ../../src/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;REP&lt;/span&gt; -samfile outalign.sam &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt;
+started 9 pm&amp;nbsp;11/7&lt;/p&gt;
+&lt;p&gt;Still running 11/12 - need to generate MySql database
+    11/13 still running 17% of memory being used
+    11/14 still running 18.2% memory &amp;#8230;
+Still Running - 1:45 11/10
+Pathoscope tutorial&amp;nbsp;http://www.microbiomejournal.com/content/supplementary/2049-2618-2-33-s5.pdf&lt;/p&gt;
+&lt;p&gt;Setting up mysql db
+username root with not password
+mysql -u root -p
+&lt;Enter root password&gt;
+create &lt;span class="caps"&gt;DATABASE&lt;/span&gt; pathodb;
+create user pathoscope;
+grant all privileges on pathodb.* to pathoscope@”localhost” identified by 
+‘johnsonlab’;
+flush&amp;nbsp;privileges;&lt;/p&gt;
+&lt;p&gt;waiting for databases to&amp;nbsp;download&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Followed pathoscope tutorial to setup PathoDB
+ftp://ftp.heanet.ie/disk1/sourceforge/p/pa/pathoscope/archive/pathoscope2.0_tutorial.pdf&lt;ul&gt;
+&lt;li&gt;Authors provide a curated nt GenBank database created October&amp;nbsp;2013&lt;/li&gt;
+&lt;li&gt;Downloaded pathodb.sql.gz from ftp://oligomer.bumc.
+bu.edu/data/pathodb.sql.gz on&amp;nbsp;11/19/2014&lt;/li&gt;
+&lt;li&gt;Downloaded nt sequence data from ftp://oligomer.
+bumc.bu.edu/data/nt_ti.fa.gz on&amp;nbsp;11/19/2014&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Using bowtie 2 version 2.2.3 for mapping, version installed as part of&amp;nbsp;biolinux8&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;downloaded pathodb.sql and nt_ti.fa from pathoscope&amp;nbsp;website&lt;/p&gt;
+&lt;h1&gt;setting up&amp;nbsp;pathodb&lt;/h1&gt;
+&lt;p&gt;gunzip -dc nt_it.gz&amp;nbsp;&amp;gt;nt_ti.fa&lt;/p&gt;
+&lt;p&gt;python ../pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;LIB&lt;/span&gt; -genomeFile nt_ti.fa &amp;#8212;online -dbhost localhost -dbuser pathoscope -dbpasswd johnsonlab -outPrefix&amp;nbsp;micro_rm_patho_db&lt;/p&gt;
+&lt;p&gt;python pathoscope.py &lt;span class="caps"&gt;MAP&lt;/span&gt; -U fastq -targetRefFiles nt.fasta  -outDir results -outAlign &lt;input_name&gt;.sam -expTag LT2_micro_rm
+used -U for single end and -1, -2 for paired&amp;nbsp;end&lt;/p&gt;
+&lt;p&gt;Test run on individual file
+../../../utilities/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;MAP&lt;/span&gt; -1 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_1.fastq -2 ../../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/SRR1555296_2.fastq -targetRefFiles ../../../utilities/patho_utils/micro_rm_patho_db_ti.fa -outDir &lt;span class="caps"&gt;SRR155296&lt;/span&gt; -outAlign &lt;span class="caps"&gt;SRR155296&lt;/span&gt;.sam -expTag &lt;span class="caps"&gt;RM8375&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;ID&lt;/span&gt; - if running patho report do not need to run &lt;span class="caps"&gt;ID&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class="caps"&gt;REP&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;also look into using pathoQC&amp;nbsp;http://sourceforge.net/projects/pathoscope/files/pathoqc_v0.1.1.tar.gz/download&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Started test run at 10:00 &lt;span class="caps"&gt;PM&lt;/span&gt;&amp;nbsp;12/4/2014&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tomorrow &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;check&amp;nbsp;run&lt;/li&gt;
+&lt;li&gt;optimize - make sure using all 8 cores, or parallelize runs&lt;ul&gt;
+&lt;li&gt;look into best way to optimize, paralleize multiple samples using a single core for each or running &lt;span class="caps"&gt;ID&lt;/span&gt; after map in&amp;nbsp;parallel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;issue with defining the number of threads - change manually for&amp;nbsp;now&lt;/li&gt;
+&lt;li&gt;update readme with code for running the&amp;nbsp;pipeline&lt;/li&gt;
+&lt;li&gt;error with cleanup rm: cannot remove ‘/media/nolson/second/current_projects/micro_rm_dev/analysis/bioinf/genome_purity/&lt;span class="caps"&gt;SRR1393721&lt;/span&gt;/&lt;span class="caps"&gt;SRR1393721&lt;/span&gt;-utilities/patho_utils/micro_rm_patho_db_ti.*sam’: No such file or&amp;nbsp;directory&lt;/li&gt;
+&lt;li&gt;update code to that steps will not&amp;nbsp;rerun&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;restarted text 8:30 &lt;span class="caps"&gt;AM&lt;/span&gt;&amp;nbsp;12/5/2015&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using pathoscope to characterize sequence data from reference material&amp;nbsp;charaterization&lt;/p&gt;
+&lt;h1&gt;link to&amp;nbsp;pathoscope&lt;/h1&gt;
+&lt;p&gt;&lt;span class="caps"&gt;PATHO&lt;/span&gt;=../../src/pathoscope2/pathoscope/pathoscope.py&lt;/p&gt;
+&lt;p&gt;download the refseq&amp;nbsp;database &lt;/p&gt;
+&lt;p&gt;documentation on databases
+ftp://ftp.ncbi.nlm.nih.gov/blast/db/&lt;span class="caps"&gt;README&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Downloaded 11/03/2014
+ftp://ftp.ncbi.nih.gov/blast/db/&lt;span class="caps"&gt;FASTA&lt;/span&gt;/nt.gz 20.5 Gb 
+moved to utilities directory
+md5sum ../../utilities/nt.gz 
+670e984e61faf2aa11a074316ab85fa2&amp;nbsp;../../utilities/nt.gz&lt;/p&gt;
+&lt;p&gt;Inititaing libary
+python $&lt;span class="caps"&gt;PATHO&lt;/span&gt; &lt;span class="caps"&gt;LIB&lt;/span&gt; -genomeFile ../../utilities/nt.gz -outPrefix&amp;nbsp;../../utilities/patho_nt_db&lt;/p&gt;
+&lt;p&gt;Mapping S0h-1 dataset
+python $&lt;span class="caps"&gt;PATHO&lt;/span&gt; &lt;span class="caps"&gt;MAP&lt;/span&gt; -1 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/S0h-1_S1_L001_R1_001.fastq -2 ../../data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/fastq/S0h-1_S1_L001_R2_001.fastq -targetRefFiles ../../utilities/nt.fasta -indexDir&amp;nbsp;../../utilities&lt;/p&gt;
+&lt;p&gt;Started around 10:30 am - indexing 11/4, finished ~ 4 pm&amp;nbsp;11/6&lt;/p&gt;
+&lt;p&gt;Started mapping run ~4p 11/6, needs to map to the 20 split&amp;nbsp;files&lt;/p&gt;
+&lt;p&gt;for 11/7 - telework
+pathomap finished running - 200 + Gb of sam&amp;nbsp;files&lt;/p&gt;
+&lt;p&gt;running pathoid
+nohup python $&lt;span class="caps"&gt;PATHO&lt;/span&gt; &lt;span class="caps"&gt;ID&lt;/span&gt; &amp;#8212;noUpdatedAlignFile -alignFile outalign.sam &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt;
+started around 11:45 am&amp;nbsp;11/7&lt;/p&gt;
+&lt;p&gt;running path report
+nohup python ../../src/pathoscope2/pathoscope/pathoscope.py &lt;span class="caps"&gt;REP&lt;/span&gt; -samfile outalign.sam &lt;span class="amp"&gt;&amp;amp;&lt;/span&gt;
+started 9 pm&amp;nbsp;11/7&lt;/p&gt;
+&lt;p&gt;Still running 11/12 - need to generate MySql database
+    11/13 still running 17% of memory being used
+    11/14 still running 18.2% memory &amp;#8230;
+Still Running - 1:45 11/10
+Pathoscope tutorial&amp;nbsp;http://www.microbiomejournal.com/content/supplementary/2049-2618-2-33-s5.pdf&lt;/p&gt;
+&lt;p&gt;Setting up mysql db
+username root with not password
+mysql -u root -p
+&lt;Enter root password&gt;
+create &lt;span class="caps"&gt;DATABASE&lt;/span&gt; pathodb;
+create user pathoscope;
+grant all privileges on pathodb.* to pathoscope@”localhost” identified by 
+‘johnsonlab’;
+flush&amp;nbsp;privileges;&lt;/p&gt;
+&lt;p&gt;waiting for databases to&amp;nbsp;download&lt;/p&gt;</summary><category term="Pathoscope"></category><category term="Docker"></category></entry><entry><title>Investigation of issues preventing joing vcf file</title><link href="http://nate-d-olson.github.io/lab_notebok/pileup%20clean.html" rel="alternate"></link><updated>2015-01-16T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2014-11-18:lab_notebok/pileup clean.html</id><summary type="html">&lt;h1&gt;script revisions for bam&amp;nbsp;mpileups&lt;/h1&gt;
+&lt;p&gt;Note binaries and data files are in the downloads directory
+&lt;span class="caps"&gt;REF&lt;/span&gt;=~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta&lt;/p&gt;
+&lt;h1&gt;remove&amp;nbsp;duplicates&lt;/h1&gt;
+&lt;p&gt;samtools rmdup Ion001.bam&amp;nbsp;Ion001.rd.bam&lt;/p&gt;
+&lt;h1&gt;realign around&amp;nbsp;indels&lt;/h1&gt;
+&lt;p&gt;java -Xmx4g -jar GenomeAnalysisTK.jar \
+   -T IndelRealigner \
+   -R $&lt;span class="caps"&gt;REF&lt;/span&gt; \
+   -I Ion001.rd.bam \
+   -o&amp;nbsp;Ion001.rd.ir.bam&lt;/p&gt;
+&lt;h1&gt;how to clean up bams with&amp;nbsp;indels&lt;/h1&gt;
+&lt;h1&gt;option 1 - do not call&amp;nbsp;indels&lt;/h1&gt;
+&lt;p&gt;mpileup option for stricter homopolymer 
+-h 50 
+minimum fraction of indels
+-F&amp;nbsp;0.01&lt;/p&gt;
+&lt;h1&gt;python script to clean up vcf&amp;nbsp;file&lt;/h1&gt;
+&lt;h1&gt;other???&lt;/h1&gt;
+&lt;h1&gt;testing&lt;/h1&gt;
+&lt;h1&gt;remove duplicates with -h 50 -F&amp;nbsp;0.01&lt;/h1&gt;
+&lt;p&gt;samtools-1.1/samtools rmdup Ion001.bam Ion001.rd.bam
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 50 -f ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta Ion001.rd.bam -o&amp;nbsp;Ion001.vcf&lt;/p&gt;
+&lt;h1&gt;removal duplicates with indel realignment with -h 50 and -F&amp;nbsp;0.01&lt;/h1&gt;
+&lt;p&gt;samtools-1.1/samtools index Ion001.rd.bam
+samtools rmdup Ion001.bam&amp;nbsp;Ion001.rd.bam&lt;/p&gt;
+&lt;p&gt;java -jar picard-tools-1.123/CreateSequenceDictionary.jar R=~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta O=~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.dict&lt;/p&gt;
+&lt;p&gt;java -Xmx2g -jar GenomeAnalysisTK.jar \
+-T RealignerTargetCreator \
+-R  ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta\
+-I Ion001.rd.bam \
+-o&amp;nbsp;forIndelRealigner.intervals&lt;/p&gt;
+&lt;p&gt;java -Xmx4g -jar GenomeAnalysisTK.jar \
+   -T IndelRealigner \
+   -R ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta\
+   -I Ion001.rd.bam \
+   -targetIntervals forIndelRealigner.intervals \
+   -o&amp;nbsp;Ion001.rd.ir.bam&lt;/p&gt;
+&lt;p&gt;higher -h
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 50 -f ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta Ion001.rd.ir.bam -o Ion001.ir.vcf
+did not run to completion - homopolymer error still present in vcf &amp;#8230; not completely sur they are errors&amp;nbsp;though&lt;/p&gt;
+&lt;p&gt;lower -h
+samtools-1.1/samtools mpileup -vu -F 0.01 -h 20 -f ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta Ion001.rd.bam -o&amp;nbsp;Ion001.20.vcf&lt;/p&gt;
+&lt;h1&gt;more stringent setting for&amp;nbsp;mpileup&lt;/h1&gt;
+&lt;p&gt;skipping indels
+samtools-1.1/samtools mpileup -vu -I -f ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta Ion001.rd.ir.bam -o&amp;nbsp;Ion001.noIndel.vcf&lt;/p&gt;
+&lt;p&gt;Next step is to compare the resulting vcf files and generate a&amp;nbsp;pipeline&lt;/p&gt;
+&lt;p&gt;mpileup -h
+Coefficient for modeling homopolymer errors. Given an l-long homopolymer run, the sequencing error of an indel of size s is modeled as &lt;span class="caps"&gt;INT&lt;/span&gt;*s/l.&amp;nbsp;[100]&lt;/p&gt;
+&lt;p&gt;Pooled analysis 
+samtools-1.1/samtools mpileup -vu -I -f ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/&lt;span class="caps"&gt;CFSAN008157&lt;/span&gt;.&lt;span class="caps"&gt;HGAP&lt;/span&gt;.fasta &lt;span class="caps"&gt;PGM&lt;/span&gt;/*bam -o &lt;span class="caps"&gt;RM8375&lt;/span&gt;-&lt;span class="caps"&gt;PGM&lt;/span&gt;.vcf&lt;/p&gt;
+&lt;p&gt;Check out 
+vcflib
+usage: vcfleftalign [options]&amp;nbsp;[file]&lt;/p&gt;
+&lt;p&gt;options:
+    -r, &amp;#8212;reference &lt;span class="caps"&gt;FILE&lt;/span&gt;  Use this reference as a basis for realignment.
+    -w, &amp;#8212;window N        Use a window of this many bp when left aligning&amp;nbsp;(150).&lt;/p&gt;
+&lt;p&gt;Left-aligns variants in the specified input file or stdin.  Window size is determined
+dynamically according to the entropy of the regions flanking the indel.  These must have
+entropy &amp;gt; 1 bit/bp, or be shorter than&amp;nbsp;~5kb&lt;/p&gt;</summary><category term="consensus base"></category></entry></feed>
