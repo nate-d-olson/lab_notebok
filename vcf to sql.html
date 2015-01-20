@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>ipython-notebook - Research Notebook</title>
+    <title>Loading vcf and purity data into sqlite - Research Notebook</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,16 +10,21 @@
 
 
 
+<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/vcf to sql.html">
 
-    <meta name="author" content="Nate Olson" />
-    <meta name="keywords" content="ipython-notebook" />
+        <meta name="author" content="Nate Olson" />
+        <meta name="keywords" content="consensus base" />
+        <meta name="description" content="Loading vcf data into sqlite Database and calculating purity values as well as initial summary analysis." />
 
-    <!-- Open Graph tags -->
         <meta property="og:site_name" content="Research Notebook" />
-        <meta property="og:type" content="website"/>
-        <meta property="og:title" content="Research Notebook"/>
-        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok"/>
-        <meta property="og:description" content="Research Notebook"/>
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Loading vcf and purity data into sqlite"/>
+        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/vcf to sql.html"/>
+        <meta property="og:description" content="Loading vcf data into sqlite Database and calculating purity values as well as initial summary analysis."/>
+        <meta property="article:published_time" content="2015-01-20" />
+            <meta property="article:section" content="Micro RM" />
+            <meta property="article:tag" content="consensus base" />
+            <meta property="article:author" content="Nate Olson" />
 
 
     <!-- Bootstrap -->
@@ -53,7 +58,7 @@ Research Notebook            </a>
                         <li >
                             <a href="http://nate-d-olson.github.io/lab_notebok/category/ipynb.html">Ipynb</a>
                         </li>
-                        <li >
+                        <li class="active">
                             <a href="http://nate-d-olson.github.io/lab_notebok/category/micro-rm.html">Micro rm</a>
                         </li>
                         <li >
@@ -73,20 +78,58 @@ Research Notebook            </a>
     <div class="row">
         <div class="col-sm-9">
 
-            <article>
-                <h2><a href="http://nate-d-olson.github.io/lab_notebok/variant calling docker.html">Plans for variant&nbsp;calling</a></h2>
-                <div class="summary"><p>Planning variant calling&nbsp;pipeline</p>
-                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/variant calling docker.html">more ...</a>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="http://nate-d-olson.github.io/lab_notebok/vcf to sql.html"
+                       rel="bookmark"
+                       title="Permalink to Loading vcf and purity data into sqlite">
+                        Loading vcf and purity data into&nbsp;sqlite
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2015-01-20T00:00:00+01:00"> Tue 20 January 2015</time>
+    </span>
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">consensus base</a>
+    
+</footer><!-- /.post-info -->                    </div>
                 </div>
-            </article>
-            <hr/>
-            <article>
-                <h2><a href="http://nate-d-olson.github.io/lab_notebok/varcall_notebook.html">whole genome variant docker&nbsp;setup</a></h2>
-                <div class="summary"><p>Initial use of&nbsp;varcall_notebook</p>
-                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/varcall_notebook.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
+                <h2>Objective</h2>
+<p>Load vcf results into sqlite database and calculate purity values by sample and&nbsp;platform</p>
+<h2>Approach</h2>
+<ul>
+<li>Used the vcf2tsv function in vcflib to generate tsv files
+    &#8216;vcf2tsv -g input.vcf &lt;&nbsp;outout.tsv&#8217;</li>
+<li>Created gather_vcf_functions.R to load the tsv files and calculate purity&nbsp;values</li>
+<li>Needed to filter <span class="caps">INDELS</span> for the join in pur_plat_join function to&nbsp;work</li>
+<li>Initial in purity_analysis_2015_01_20.Rmd, will post later&nbsp;&#8230;</li>
+</ul>
+<h2>Next&nbsp;steps</h2>
+<ol>
+<li>cleanup pipeline<ol>
+<li>incorporate vcf2tsv into&nbsp;consensus_base_pipeline</li>
+<li>make package for R&nbsp;functions</li>
+<li>make pairwise purity plot&nbsp;function</li>
+</ol>
+</li>
+<li>work on confidence labels&nbsp;method</li>
+<li>Pairwise MiSeq replicates and <span class="caps">PGM</span>/MiSeq by&nbsp;vial</li>
+</ol>
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
 
         </div>
         <div class="col-sm-3" id="sidebar">
@@ -191,7 +234,7 @@ Research Notebook            </a>
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2014 Nate Olson
+         <div class="col-xs-10">&copy; 2015 Nate Olson
             &middot; Powered by <a href="https://github.com/DandyDev/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>         </div>

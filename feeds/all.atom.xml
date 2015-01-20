@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Research Notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/" rel="alternate"></link><link href="http://nate-d-olson.github.io/lab_notebok/feeds/all.atom.xml" rel="self"></link><id>http://nate-d-olson.github.io/lab_notebok/</id><updated>2015-01-17T00:00:00+01:00</updated><entry><title>Setting up sumantra</title><link href="http://nate-d-olson.github.io/lab_notebok/sumatra.html" rel="alternate"></link><updated>2015-01-17T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-17:lab_notebok/sumatra.html</id><summary type="html">&lt;h2&gt;Sumatra install in&amp;nbsp;virtualenv&lt;/h2&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Research Notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/" rel="alternate"></link><link href="http://nate-d-olson.github.io/lab_notebok/feeds/all.atom.xml" rel="self"></link><id>http://nate-d-olson.github.io/lab_notebok/</id><updated>2015-01-20T00:00:00+01:00</updated><entry><title>Loading vcf and purity data into sqlite</title><link href="http://nate-d-olson.github.io/lab_notebok/vcf%20to%20sql.html" rel="alternate"></link><updated>2015-01-20T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-20:lab_notebok/vcf to sql.html</id><summary type="html">&lt;h2&gt;Objective&lt;/h2&gt;
+&lt;p&gt;Load vcf results into sqlite database and calculate purity values by sample and&amp;nbsp;platform&lt;/p&gt;
+&lt;h2&gt;Approach&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Used the vcf2tsv function in vcflib to generate tsv files
+    &amp;#8216;vcf2tsv -g input.vcf &amp;lt;&amp;nbsp;outout.tsv&amp;#8217;&lt;/li&gt;
+&lt;li&gt;Created gather_vcf_functions.R to load the tsv files and calculate purity&amp;nbsp;values&lt;/li&gt;
+&lt;li&gt;Needed to filter &lt;span class="caps"&gt;INDELS&lt;/span&gt; for the join in pur_plat_join function to&amp;nbsp;work&lt;/li&gt;
+&lt;li&gt;Initial in purity_analysis_2015_01_20.Rmd, will post later&amp;nbsp;&amp;#8230;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Next&amp;nbsp;steps&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;cleanup pipeline&lt;ol&gt;
+&lt;li&gt;incorporate vcf2tsv into&amp;nbsp;consensus_base_pipeline&lt;/li&gt;
+&lt;li&gt;make package for R&amp;nbsp;functions&lt;/li&gt;
+&lt;li&gt;make pairwise purity plot&amp;nbsp;function&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;work on confidence labels&amp;nbsp;method&lt;/li&gt;
+&lt;li&gt;Pairwise MiSeq replicates and &lt;span class="caps"&gt;PGM&lt;/span&gt;/MiSeq by&amp;nbsp;vial&lt;/li&gt;
+&lt;/ol&gt;</summary><category term="consensus base"></category></entry><entry><title>Setting up sumantra</title><link href="http://nate-d-olson.github.io/lab_notebok/sumatra.html" rel="alternate"></link><updated>2015-01-17T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-17:lab_notebok/sumatra.html</id><summary type="html">&lt;h2&gt;Sumatra install in&amp;nbsp;virtualenv&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;# creating virualenv
 virturalev sumantra_dev
 cd sumatra_dev
