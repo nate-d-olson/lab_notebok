@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Notebook 11/14/2014 - Research Notebook</title>
+    <title>Notebook Assembly Pipeline Development - Research Notebook</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,20 +10,20 @@
 
 
 
-<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/notebook-2014-11-14.html">
+<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html">
 
         <meta name="author" content="Nate Olson" />
-        <meta name="keywords" content="ipynb" />
-        <meta name="description" content="Notebook 11/14/2014¶Deleted all work from past few months! Cleaning up files and removed files in wrong directory! Opportunity for a fresh start Objectives¶ step up directory structure for study setup docker for performing analysis Directory structure¶" />
+        <meta name="keywords" content="ipynb; micro-rm" />
+        <meta name="description" content="Genome assembly validation¶Approach¶ Indexing ref TMAP mapping pipeline in unaligned bams out indexed and sorted aligned bams with read groups Bwa mapping in fastq files out indexed and sorted aligned bams with read groups Merge bams running pilon starting docker¶ mounting both micro_rm_dev and micro_rm_master docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e “PASSWORD=micro_rm_pw” varcall_notebook Indexing ref¶ tmap bwa picard" />
 
         <meta property="og:site_name" content="Research Notebook" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Notebook 11/14/2014"/>
-        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/notebook-2014-11-14.html"/>
-        <meta property="og:description" content="Notebook 11/14/2014¶Deleted all work from past few months! Cleaning up files and removed files in wrong directory! Opportunity for a fresh start Objectives¶ step up directory structure for study setup docker for performing analysis Directory structure¶"/>
-        <meta property="article:published_time" content="2015-01-16" />
+        <meta property="og:title" content="Notebook Assembly Pipeline Development"/>
+        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html"/>
+        <meta property="og:description" content="Genome assembly validation¶Approach¶ Indexing ref TMAP mapping pipeline in unaligned bams out indexed and sorted aligned bams with read groups Bwa mapping in fastq files out indexed and sorted aligned bams with read groups Merge bams running pilon starting docker¶ mounting both micro_rm_dev and micro_rm_master docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e “PASSWORD=micro_rm_pw” varcall_notebook Indexing ref¶ tmap bwa picard"/>
+        <meta property="article:published_time" content="2015-01-26" />
             <meta property="article:section" content="iPyNB" />
-            <meta property="article:tag" content="ipynb" />
+            <meta property="article:tag" content="ipynb; micro-rm" />
             <meta property="article:author" content="Nate Olson" />
 
 
@@ -82,10 +82,10 @@ Research Notebook            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://nate-d-olson.github.io/lab_notebok/notebook-2014-11-14.html"
+                    <a href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html"
                        rel="bookmark"
-                       title="Permalink to Notebook 11/14/2014">
-                        Notebook&nbsp;11/14/2014
+                       title="Permalink to Notebook Assembly Pipeline Development">
+                        Notebook Assembly Pipeline&nbsp;Development
                     </a>
                 </h1>
             </header>
@@ -95,13 +95,13 @@ Research Notebook            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-01-16T00:00:00+01:00"> Fri 16 January 2015</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-01-26T00:00:00+01:00"> Mon 26 January 2015</time>
     </span>
 
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://nate-d-olson.github.io/lab_notebok/tag/ipynb.html">ipynb</a>
+	<a href="http://nate-d-olson.github.io/lab_notebok/tag/ipynb-micro-rm.html">ipynb; micro-rm</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
@@ -10884,23 +10884,59 @@ span.autosave_status {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Notebook-11/14/2014">Notebook 11/14/2014<a class="anchor-link" href="#Notebook-11/14/2014">&#182;</a></h2><p>Deleted all work from past few months! Cleaning up files and removed files in wrong&nbsp;directory!</p>
-<p>Opportunity for a fresh&nbsp;start</p>
-<h3 id="Objectives">Objectives<a class="anchor-link" href="#Objectives">&#182;</a></h3><ol>
-<li>step up directory structure for&nbsp;study</li>
-<li>setup docker for performing&nbsp;analysis</li>
+<h2 id="Genome-assembly-validation">Genome assembly validation<a class="anchor-link" href="#Genome-assembly-validation">&#182;</a></h2><h3 id="Approach">Approach<a class="anchor-link" href="#Approach">&#182;</a></h3><ol>
+<li>Indexing&nbsp;ref</li>
+<li><span class="caps">TMAP</span> mapping pipeline<ul>
+<li>in unaligned&nbsp;bams</li>
+<li>out indexed and sorted aligned bams with read&nbsp;groups </li>
+</ul>
+</li>
+<li>Bwa mapping<ul>
+<li>in fastq&nbsp;files</li>
+<li>out indexed and sorted aligned bams with read&nbsp;groups</li>
+</ul>
+</li>
+<li>Merge&nbsp;bams</li>
+<li>running&nbsp;pilon</li>
 </ol>
-<h3 id="Directory-structure">Directory structure<a class="anchor-link" href="#Directory-structure">&#182;</a></h3>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="starting-docker">starting docker<a class="anchor-link" href="#starting-docker">&#182;</a></h2><ul>
+<li><p>mounting both micro_rm_dev and&nbsp;micro_rm_master</p>
+<p>docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e &#8220;<span class="caps">PASSWORD</span>=micro_rm_pw&#8221;&nbsp;varcall_notebook</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing-ref">Indexing ref<a class="anchor-link" href="#Indexing-ref">&#182;</a></h3><ol>
+<li>tmap</li>
+<li>bwa</li>
+<li>picard</li>
+</ol>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="o">%%</span><span class="k">bash</span>
-<span class="n">tree</span> <span class="o">-</span><span class="n">d</span> <span class="o">../</span>
+<div class=" highlight hl-ipython2"><pre><span class="n">cd</span> <span class="o">/</span><span class="n">micro_rm_bioinf</span><span class="o">/</span>
 </pre></div>
 
 </div>
@@ -10913,31 +10949,36 @@ span.autosave_status {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>../
-├── analysis
-│   ├── bioinf
-│   │   ├── genome_purity
-│   │   ├── genome_structure
-│   │   ├── sequence_homogeneity
-│   │   └── sequence_purity
-│   └── stats
-├── bin
-├── data
-│   └── RM8375
-│       ├── MiSeq
-│       │   ├── bam
-│       │   ├── fastq
-│       │   └── vcf
-│       ├── PGM
-│       │   ├── bam
-│       │   └── vcf
-│       └── ref
-├── dev
-│   └── tmp
-├── doc
-└── src
+<pre>/micro_rm_bioinf
+</pre>
+</div>
+</div>
 
-22 directories
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">python</span> <span class="n">micro_rm_bioinf</span><span class="o">/</span><span class="n">pipelines</span><span class="o">/</span><span class="n">index_ref_pipeline</span><span class="o">.</span><span class="n">py</span> <span class="n">micro_rm_bioinf</span><span class="o">/</span><span class="n">params</span><span class="o">/</span><span class="n">CFSAN_ref_index_params</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Indexing reference with TMAP ...
+Creating Sequence Dictionary ...
 </pre>
 </div>
 </div>
@@ -10951,92 +10992,127 @@ span.autosave_status {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="BWA-mapping-pipeline"><span class="caps">BWA</span> mapping pipeline<a class="anchor-link" href="#BWA-mapping-pipeline">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">python</span> <span class="n">micro_rm_bioinf</span><span class="o">/</span><span class="n">pipelines</span><span class="o">/</span><span class="n">map_miseq_pipeline</span><span class="o">.</span><span class="n">py</span> \
+            <span class="n">micro_rm_bioinf</span><span class="o">/</span><span class="n">params</span><span class="o">/</span><span class="n">miseq_mapping_params_test</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mapping pair-ed end reads to reference
+Converting sam to sorted, indexed bam with header ...
+Converting sam to bam ...
+Adding header to bam ...
+Sorting bam ...
+Indexing bam ...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To Do:
+Minimize the required number of input&nbsp;parameters</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="TMAP-mapping-pipeline"><span class="caps">TMAP</span> mapping pipeline<a class="anchor-link" href="#TMAP-mapping-pipeline">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%%</span><span class="k">bash</span>
+<span class="n">python</span> <span class="n">micro_rm_bioinf</span><span class="o">/</span><span class="n">pipelines</span><span class="o">/</span><span class="n">map_pgm_pipeline</span><span class="o">.</span><span class="n">py</span> \
+            <span class="n">micro_rm_bioinf</span><span class="o">/</span><span class="n">params</span><span class="o">/</span><span class="n">pgm_mapping_params_test</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mapping fastq with TMAP ...
+Converting sam to sorted, indexed bam with header ...
+Converting sam to bam ...
+Adding header to bam ...
+Sorting bam ...
+Indexing bam ...
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To Do:
+Need to change to take unaligned bams as input&nbsp;files</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Pilon-pipeline">Pilon pipeline<a class="anchor-link" href="#Pilon-pipeline">&#182;</a></h2><p>Steps:</p>
 <ol>
-<li>analysis - code for performing data analysis<ol>
-<li>bioinf - scripts for running bioinformatic&nbsp;pipelines</li>
-<li>stats - code for statistical summary of pipeline&nbsp;results</li>
+<li>merge&nbsp;bams</li>
+<li>run&nbsp;pilon</li>
 </ol>
-</li>
-<li>bin - binaries for bioinformatic algorithms, note this may be included in the docker&nbsp;image</li>
-<li>data - raw sequence&nbsp;data</li>
-<li>dev - analysis&nbsp;playground</li>
-<li>doc - general project&nbsp;documentation</li>
-<li>src - source code for bioinformatic&nbsp;algorithms</li>
+<p>To&nbsp;Do:</p>
+<ol>
+<li>create&nbsp;functions</li>
+<li>create pipeline&nbsp;script</li>
 </ol>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Github-repositories">Github repositories<a class="anchor-link" href="#Github-repositories">&#182;</a></h2><ul>
-<li>analysis/bioinf<ul>
-<li>genome_structure</li>
-<li>genome_purity</li>
-<li>sequence_purity</li>
-<li>sequence_homogenetiy   </li>
-</ul>
-</li>
-</ul>
-<p>For each <span class="caps">README</span>.md file describing analysis approach and bash or ipython pipeline&nbsp;scripts</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">mv</span> <span class="n">sequence</span><span class="o">*</span> <span class="o">../</span><span class="n">analysis</span><span class="o">/</span><span class="n">bioinf</span><span class="o">/</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Approach download related repositories will create new directories for the three different applications and transfer related files to&nbsp;each.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="TO-DO"><span class="caps">TO</span> <span class="caps">DO</span><a class="anchor-link" href="#TO-DO">&#182;</a></h1><ol>
-<li>set up github&nbsp;repository</li>
-<li>look into github annex for&nbsp;data</li>
-<li>code for creating directories for other reference materials - use -p for creating parents and {A,B,C} for multiple&nbsp;subdirectories</li>
-<li>vcf file for base quality score&nbsp;recalibration</li>
-<li>work on <span class="caps">PGM</span> variant call&nbsp;script</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre> 
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
             </div>
             <!-- /.entry-content -->

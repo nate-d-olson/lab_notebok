@@ -73,6 +73,67 @@ Research Notebook            </a>
         <div class="col-sm-9">
 
             <article>
+                <h2><a href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html">Notebook Assembly Pipeline&nbsp;Development</a></h2>
+                <div class="summary">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Genome-assembly-validation">Genome assembly validation<a class="anchor-link" href="#Genome-assembly-validation">&#182;</a></h2><h3 id="Approach">Approach<a class="anchor-link" href="#Approach">&#182;</a></h3><ol>
+<li>Indexing&nbsp;ref</li>
+<li><span class="caps">TMAP</span> mapping pipeline<ul>
+<li>in unaligned&nbsp;bams</li>
+<li>out indexed and sorted aligned bams with read&nbsp;groups </li>
+</ul>
+</li>
+<li>Bwa mapping<ul>
+<li>in fastq&nbsp;files</li>
+<li>out indexed and sorted aligned bams with read&nbsp;groups</li>
+</ul>
+</li>
+<li>Merge&nbsp;bams</li>
+<li>running&nbsp;pilon</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="starting-docker">starting docker<a class="anchor-link" href="#starting-docker">&#182;</a></h2><ul>
+<li><p>mounting both micro_rm_dev and&nbsp;micro_rm_master</p>
+<p>docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e &#8220;<span class="caps">PASSWORD</span>=micro_rm_pw&#8221;&nbsp;varcall_notebook</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing-ref">Indexing ref<a class="anchor-link" href="#Indexing-ref">&#182;</a></h3><ol>
+<li>tmap</li>
+<li>bwa</li>
+<li>picard</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html">more ...</a>
+                </div>
+            </article>
+            <hr/>
+            <article>
                 <h2><a href="http://nate-d-olson.github.io/lab_notebok/vcf to sql.html">Loading vcf and purity data into&nbsp;sqlite</a></h2>
                 <div class="summary"><p>Loading vcf data into sqlite Database and calculating purity values as well as initial summary&nbsp;analysis.</p>
                     <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/vcf to sql.html">more ...</a>
@@ -176,13 +237,6 @@ Approach: Running Pilon using bash commands, evaluate revise reference relative 
                 </div>
             </article>
             <hr/>
-            <article>
-                <h2><a href="http://nate-d-olson.github.io/lab_notebok/consensus base dev.html">Consensus base pipeline&nbsp;development</a></h2>
-                <div class="summary"><p>Developing consensus base&nbsp;pipeline</p>
-                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/consensus base dev.html">more ...</a>
-                </div>
-            </article>
-            <hr/>
 
         <ul class="pager">
                 <li class="previous disabled"><a href="#">&larr; Newer</a></li>
@@ -207,13 +261,13 @@ Approach: Running Pilon using bash commands, evaluate revise reference relative 
             <li class="list-group-item"><a href="http://nate-d-olson.github.io/lab_notebok/"><h4><i class="fa fa-tags fa-lg"></i><span class="icon-label">Tags</span></h4></a>
                 <ul class="list-group " id="tags">
                     <li class="list-group-item tag-1">
-                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/docker.html">
-                            Docker
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">
+                            consensus base
                         </a>
                     </li>
                     <li class="list-group-item tag-1">
-                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">
-                            consensus base
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/docker.html">
+                            Docker
                         </a>
                     </li>
                     <li class="list-group-item tag-2">
@@ -227,8 +281,8 @@ Approach: Running Pilon using bash commands, evaluate revise reference relative 
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/pathoscope.html">
-                            Pathoscope
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/ipynb-micro-rm.html">
+                            ipynb; micro-rm
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -237,8 +291,13 @@ Approach: Running Pilon using bash commands, evaluate revise reference relative 
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/lab-notebook.html">
-                            lab notebook
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/imetamos.html">
+                            iMetAMOS
+                        </a>
+                    </li>
+                    <li class="list-group-item tag-4">
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/pathoscope.html">
+                            Pathoscope
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
@@ -252,8 +311,8 @@ Approach: Running Pilon using bash commands, evaluate revise reference relative 
                         </a>
                     </li>
                     <li class="list-group-item tag-4">
-                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/imetamos.html">
-                            iMetAMOS
+                        <a href="http://nate-d-olson.github.io/lab_notebok/tag/lab-notebook.html">
+                            lab notebook
                         </a>
                     </li>
                 </ul>

@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Micro RM - Research Notebook</title>
+    <title>ipynb; micro-rm - Research Notebook</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -12,7 +12,7 @@
 
 
     <meta name="author" content="Nate Olson" />
-    <meta name="keywords" content="Micro RM" />
+    <meta name="keywords" content="ipynb; micro-rm" />
 
     <!-- Open Graph tags -->
         <meta property="og:site_name" content="Research Notebook" />
@@ -53,7 +53,7 @@ Research Notebook            </a>
                         <li >
                             <a href="http://nate-d-olson.github.io/lab_notebok/category/ipynb.html">Ipynb</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://nate-d-olson.github.io/lab_notebok/category/micro-rm.html">Micro rm</a>
                         </li>
                         <li >
@@ -74,17 +74,67 @@ Research Notebook            </a>
         <div class="col-sm-9">
 
             <article>
-                <h2><a href="http://nate-d-olson.github.io/lab_notebok/pileup clean.html">Investigation of issues preventing joing vcf&nbsp;file</a></h2>
-                <div class="summary"><p>Look into different parameters for filtering vcf&nbsp;file.</p>
-                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/pileup clean.html">more ...</a>
+                <h2><a href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html">Notebook Assembly Pipeline&nbsp;Development</a></h2>
+                <div class="summary">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Genome-assembly-validation">Genome assembly validation<a class="anchor-link" href="#Genome-assembly-validation">&#182;</a></h2><h3 id="Approach">Approach<a class="anchor-link" href="#Approach">&#182;</a></h3><ol>
+<li>Indexing&nbsp;ref</li>
+<li><span class="caps">TMAP</span> mapping pipeline<ul>
+<li>in unaligned&nbsp;bams</li>
+<li>out indexed and sorted aligned bams with read&nbsp;groups </li>
+</ul>
+</li>
+<li>Bwa mapping<ul>
+<li>in fastq&nbsp;files</li>
+<li>out indexed and sorted aligned bams with read&nbsp;groups</li>
+</ul>
+</li>
+<li>Merge&nbsp;bams</li>
+<li>running&nbsp;pilon</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="starting-docker">starting docker<a class="anchor-link" href="#starting-docker">&#182;</a></h2><ul>
+<li><p>mounting both micro_rm_dev and&nbsp;micro_rm_master</p>
+<p>docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e &#8220;<span class="caps">PASSWORD</span>=micro_rm_pw&#8221;&nbsp;varcall_notebook</p>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Indexing-ref">Indexing ref<a class="anchor-link" href="#Indexing-ref">&#182;</a></h3><ol>
+<li>tmap</li>
+<li>bwa</li>
+<li>picard</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html">more ...</a>
                 </div>
             </article>
             <hr/>
 
-        <ul class="pager">
-                <li class="previous"><a href="http://nate-d-olson.github.io/lab_notebok/category/micro-rm.html">&larr; Newer</a></li>
-                <li class="next disabled"><a href="#">Older &rarr;</a></li>
-        </ul>
         </div>
         <div class="col-sm-3" id="sidebar">
             <aside>
