@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Consensus base pipeline development Day 3 - Research Notebook</title>
+    <title>Bam stats - Research Notebook</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,22 +10,16 @@
 
 
 
-<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/consensus base dev 3.html">
 
-        <meta name="author" content="Nate Olson" />
-        <meta name="keywords" content="consensus base,Docker" />
-        <meta name="description" content="Developing consensus base pipeline. Working on loading whole genome multisample vcf files into an sqlite db for exploratory data analysis in R" />
+    <meta name="author" content="Nate Olson" />
+    <meta name="keywords" content="Bam stats" />
 
+    <!-- Open Graph tags -->
         <meta property="og:site_name" content="Research Notebook" />
-        <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Consensus base pipeline development Day 3"/>
-        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/consensus base dev 3.html"/>
-        <meta property="og:description" content="Developing consensus base pipeline. Working on loading whole genome multisample vcf files into an sqlite db for exploratory data analysis in R"/>
-        <meta property="article:published_time" content="2015-01-15" />
-            <meta property="article:section" content="Micro RM" />
-            <meta property="article:tag" content="consensus base" />
-            <meta property="article:tag" content="Docker" />
-            <meta property="article:author" content="Nate Olson" />
+        <meta property="og:type" content="website"/>
+        <meta property="og:title" content="Research Notebook"/>
+        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok"/>
+        <meta property="og:description" content="Research Notebook"/>
 
 
     <!-- Bootstrap -->
@@ -59,7 +53,7 @@ Research Notebook            </a>
                         <li >
                             <a href="http://nate-d-olson.github.io/lab_notebok/category/ipynb.html">Ipynb</a>
                         </li>
-                        <li class="active">
+                        <li >
                             <a href="http://nate-d-olson.github.io/lab_notebok/category/micro-rm.html">Micro rm</a>
                         </li>
                         <li >
@@ -79,95 +73,13 @@ Research Notebook            </a>
     <div class="row">
         <div class="col-sm-9">
 
-    <section id="content">
-        <article>
-            <header class="page-header">
-                <h1>
-                    <a href="http://nate-d-olson.github.io/lab_notebok/consensus base dev 3.html"
-                       rel="bookmark"
-                       title="Permalink to Consensus base pipeline development Day 3">
-                        Consensus base pipeline development Day&nbsp;3
-                    </a>
-                </h1>
-            </header>
-            <div class="entry-content">
-                <div class="panel">
-                    <div class="panel-body">
-<footer class="post-info">
-    <span class="label label-default">Date</span>
-    <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-01-15T00:00:00+01:00"> Thu 15 January 2015</time>
-    </span>
-
-
-
-<span class="label label-default">Tags</span>
-	<a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">consensus base</a>
-        /
-	<a href="http://nate-d-olson.github.io/lab_notebok/tag/docker.html">Docker</a>
-    
-</footer><!-- /.post-info -->                    </div>
+            <article>
+                <h2><a href="http://nate-d-olson.github.io/lab_notebok/bam-summary-stats.html">Bam summary&nbsp;statistics</a></h2>
+                <div class="summary"><p>Looking into tools for generating summary statistics for bam&nbsp;files</p>
+                    <a class="btn btn-default btn-xs" href="http://nate-d-olson.github.io/lab_notebok/bam-summary-stats.html">more ...</a>
                 </div>
-                <h3>Notes from&nbsp;1/15/2015</h3>
-<p>Objective:
-Analyzing consensus base results on MiSeq and <span class="caps">PGM</span>&nbsp;data</p>
-<h4>Approach</h4>
-<ol>
-<li>Loading data into sqlite database - used R code vcf_parameters_to_db.R<ul>
-<li>issue readVcf() in the VariantAnnotation package does not read in sample&nbsp;information</li>
-</ul>
-</li>
-<li></li>
-</ol>
-<h4>Testing out&nbsp;Gemini</h4>
-<p>Gemini Website -[wget https://raw.github.com/arq5x/gemini/master/gemini/scripts/gemini_install.py]
-<em> Tool for analyzing variant annotations in the human genome
-</em> May be able to use to load data into sqlite
-* install following website failed on desktop, installing in&nbsp;docker</p>
-<div class="highlight"><pre>sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh
-wget https://raw.github.com/arq5x/gemini/master/gemini/scripts/gemini_install.py
-python gemini_install.py --nodata /usr/local /usr/local/shared/bin
-</pre></div>
-
-
-<ul>
-<li>gemini load -v analysis/bioinf/sequence_purity/consensus_base_pgm/RM8375_PGM.vcf RM8375_gemini.db &#8212;skip-gerp-bp &#8212;skip-cadd &#8212;skip-gene-tables &#8212;cores 6<ul>
-<li>installed with&nbsp;data </li>
-</ul>
-</li>
-<li>new approach - convert to tsv using vcf2tsv part of&nbsp;vcflib</li>
-</ul>
-<h4>Issue with&nbsp;multi-sample</h4>
-<ul>
-<li>MiSeq data the <span class="caps">ID</span> was unique but the sample was not, need to switch in run_bwa_mem_pe.py and&nbsp;rerun</li>
-<li>Rerunning Miseq
-    sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh
-    cd analysis/bioinf/sequence_purity
-    python run_bwa_mem_pe.py bwa_mem_pipeline_params_2015_01_15_HGAP.txt
-    python run_consensus_base_pipeline.py miseq_consensus_base_params_2015_01_15.txt
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="caps">HEAD</span></li>
-</ul>
-<p>had to work out bugs with sample id - changed parameters variable names to pipeline_params for information from params file and run_params to the parameters for running a specific input&nbsp;file.</p>
-<p>=======</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>dfdbf41564a59a4d73f2e6e7fa23522f3ab2676d</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-            </div>
-            <!-- /.entry-content -->
-        </article>
-    </section>
+            </article>
+            <hr/>
 
         </div>
         <div class="col-sm-3" id="sidebar">

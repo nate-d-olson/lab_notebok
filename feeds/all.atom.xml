@@ -1,5 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Research Notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/" rel="alternate"></link><link href="http://nate-d-olson.github.io/lab_notebok/feeds/all.atom.xml" rel="self"></link><id>http://nate-d-olson.github.io/lab_notebok/</id><updated>2015-01-26T00:00:00+01:00</updated><entry><title>Notebook Assembly Pipeline Development</title><link href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html" rel="alternate"></link><updated>2015-01-26T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-26:lab_notebok/notebook-2015-01-26.html</id><summary type="html">
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Research Notebook</title><link href="http://nate-d-olson.github.io/lab_notebok/" rel="alternate"></link><link href="http://nate-d-olson.github.io/lab_notebok/feeds/all.atom.xml" rel="self"></link><id>http://nate-d-olson.github.io/lab_notebok/</id><updated>2015-01-29T00:00:00+01:00</updated><entry><title>Assembly Validation Pipeline</title><link href="http://nate-d-olson.github.io/lab_notebok/pilon-pipeline.html" rel="alternate"></link><updated>2015-01-29T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-29:lab_notebok/pilon-pipeline.html</id><summary type="html">&lt;h2&gt;Genome assembly validation pipeline&amp;nbsp;1/29/2015&lt;/h2&gt;
+&lt;h3&gt;Objectives&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Finialize Genome assembly pipeline, raw reads to pilon&amp;nbsp;results &lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Approach&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Changing memory limits for&amp;nbsp;docker &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Following guidance from&amp;nbsp;http://stackoverflow.com/questions/24422123/change-boot2docker-memory-assignment&lt;/li&gt;
+&lt;li&gt;from the command&amp;nbsp;line&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$ boot2docker delete
+$ boot2docker init -m 8192
+$ boot2docker info
+{&amp;#8230;..
+    &amp;#8220;Memory&amp;#8221;: 8192,
+&amp;#8230;.. &lt;br /&gt;&amp;nbsp;}&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Booking up docker&amp;nbsp;daemon&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;command&amp;nbsp;line&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;boot2docker up
+boot2docker ssh 
+docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e &amp;#8220;&lt;span class="caps"&gt;PASSWORD&lt;/span&gt;=micro_rm_pw&amp;#8221;&amp;nbsp;varcall_notebook&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;received the following error message &amp;#8216;Pulling repository varcall_notebook
+&lt;span class="caps"&gt;FATA&lt;/span&gt;[0002] Error: image library/varcall_notebook:latest not&amp;nbsp;found&amp;#8217;&lt;/li&gt;
+&lt;li&gt;had to rebuild notebook
+&amp;#8216;docker build -t varcall_notebook&amp;nbsp;varcall_docker_notebook/&amp;#8217;&lt;/li&gt;
+&lt;li&gt;tried re-running docker run command, getting the same error with localhost being rejected&amp;nbsp;&amp;#8230;&lt;/li&gt;
+&lt;li&gt;running from the commandline for the time being
+docker run -i -t -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/&lt;span class="caps"&gt;NIST&lt;/span&gt;-Projects/micro\ &lt;span class="caps"&gt;RM&lt;/span&gt;/micro_rm_master/micro_rm_bioinf/:/micro_rm_bioinf -e &amp;#8220;&lt;span class="caps"&gt;PASSWORD&lt;/span&gt;=micro_rm_pw&amp;#8221; varcall_notebook&amp;nbsp;sh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Modifying tmap to map unaligned&amp;nbsp;bams&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;tmap does not utilize flow space information, only used as part of variant&amp;nbsp;calling&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Running tmap&amp;nbsp;pipeline&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;command-line argument
+
+python /micro_rm_bioinf/pipelines/map_pgm_pipeline.py /micro_rm_bioinf/params/pgm_mapping_params.txt
+
+run started at 3:35 pm
+finished around 3:55 pm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Running MiSeq&amp;nbsp;pipeline&lt;/h3&gt;
+&lt;p&gt;python /micro_rm_bioinf/pipelines/map_miseq_pipeline.py /micro_rm_bioinf/params/miseq_mapping_params.txt
+run started around &lt;span class="caps"&gt;4PM&lt;/span&gt; and finished around &lt;span class="caps"&gt;5PM&lt;/span&gt;&lt;/p&gt;
+&lt;h3&gt;Pilon&amp;nbsp;pipeline&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;python /micro_rm_bioinf/pipelines/pilon_pipeline.py /micro_rm_bioinf/params/pgm_mapping_params.txt
+
+after working out bugs started pilon pgm pipeline at 5:40 PM
+finished aroung 5:45 PM
+compared to first run using break and novel identified one additional candidate missassembly, another few hundered bp deletion
+    need to look into the genome annotation and coverage data for reasons for deletion
+
+python /micro_rm_bioinf/pipelines/pilon_pipeline.py /micro_rm_bioinf/params/miseq_mapping_params.txt
+started 5:45 PM
+&lt;/pre&gt;&lt;/div&gt;</summary><category term="pilon"></category><category term="assembly validation"></category></entry><entry><title>Bam summary statistics</title><link href="http://nate-d-olson.github.io/lab_notebok/bam-summary-stats.html" rel="alternate"></link><updated>2015-01-29T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-27:lab_notebok/bam-summary-stats.html</id><summary type="html">&lt;h2&gt;Micro &lt;span class="caps"&gt;RM&lt;/span&gt; fastq and bam&amp;nbsp;characterization&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;bamstats
+    http://sourceforge.net/projects/bamstats/files/latest/download?source=files
+    java -Xmx6g -jar BAMStats-&lt;span class="caps"&gt;GUI&lt;/span&gt;-1.25.jar 
+    or 
+    java -Xmx6g -jar BAMStats-1.25.jar -i ~/Desktop/micro_rm_dev/data/&lt;span class="caps"&gt;RM8375&lt;/span&gt;/MiSeq/bam/HGAP_MiSeq.bam &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Picard&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;http://broadinstitute.github.io/picard/command-line-overview.html#CollectMultipleMetrics &lt;/li&gt;
+&lt;li&gt;calculate insert&amp;nbsp;size&lt;/li&gt;
+&lt;li&gt;calculate multiple&amp;nbsp;metrics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;fastqc fastq summary&amp;nbsp;statistics&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</summary><category term="Bam stats"></category></entry><entry><title>Notebook Assembly Pipeline Development</title><link href="http://nate-d-olson.github.io/lab_notebok/notebook-2015-01-26.html" rel="alternate"></link><updated>2015-01-26T00:00:00+01:00</updated><author><name>Nate Olson</name></author><id>tag:nate-d-olson.github.io,2015-01-26:lab_notebok/notebook-2015-01-26.html</id><summary type="html">
 &lt;style type="text/css"&gt;
 
 /* General text, input and output cells */

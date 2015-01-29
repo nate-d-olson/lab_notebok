@@ -2,7 +2,7 @@
 <html lang="en"
 >
 <head>
-    <title>Consensus base pipeline development Day 3 - Research Notebook</title>
+    <title>Assembly Validation Pipeline - Research Notebook</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -10,21 +10,21 @@
 
 
 
-<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/consensus base dev 3.html">
+<link rel="canonical" href="http://nate-d-olson.github.io/lab_notebok/pilon-pipeline.html">
 
         <meta name="author" content="Nate Olson" />
-        <meta name="keywords" content="consensus base,Docker" />
-        <meta name="description" content="Developing consensus base pipeline. Working on loading whole genome multisample vcf files into an sqlite db for exploratory data analysis in R" />
+        <meta name="keywords" content="pilon,assembly validation" />
+        <meta name="description" content="Finishing up the assembly validation pipeline using Pilon." />
 
         <meta property="og:site_name" content="Research Notebook" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Consensus base pipeline development Day 3"/>
-        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/consensus base dev 3.html"/>
-        <meta property="og:description" content="Developing consensus base pipeline. Working on loading whole genome multisample vcf files into an sqlite db for exploratory data analysis in R"/>
-        <meta property="article:published_time" content="2015-01-15" />
+        <meta property="og:title" content="Assembly Validation Pipeline"/>
+        <meta property="og:url" content="http://nate-d-olson.github.io/lab_notebok/pilon-pipeline.html"/>
+        <meta property="og:description" content="Finishing up the assembly validation pipeline using Pilon."/>
+        <meta property="article:published_time" content="2015-01-29" />
             <meta property="article:section" content="Micro RM" />
-            <meta property="article:tag" content="consensus base" />
-            <meta property="article:tag" content="Docker" />
+            <meta property="article:tag" content="pilon" />
+            <meta property="article:tag" content="assembly validation" />
             <meta property="article:author" content="Nate Olson" />
 
 
@@ -83,10 +83,10 @@ Research Notebook            </a>
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="http://nate-d-olson.github.io/lab_notebok/consensus base dev 3.html"
+                    <a href="http://nate-d-olson.github.io/lab_notebok/pilon-pipeline.html"
                        rel="bookmark"
-                       title="Permalink to Consensus base pipeline development Day 3">
-                        Consensus base pipeline development Day&nbsp;3
+                       title="Permalink to Assembly Validation Pipeline">
+                        Assembly Validation&nbsp;Pipeline
                     </a>
                 </h1>
             </header>
@@ -96,74 +96,85 @@ Research Notebook            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2015-01-15T00:00:00+01:00"> Thu 15 January 2015</time>
+        <i class="fa fa-calendar"></i><time datetime="2015-01-29T00:00:00+01:00"> Thu 29 January 2015</time>
     </span>
 
 
 
 <span class="label label-default">Tags</span>
-	<a href="http://nate-d-olson.github.io/lab_notebok/tag/consensus-base.html">consensus base</a>
+	<a href="http://nate-d-olson.github.io/lab_notebok/tag/pilon.html">pilon</a>
         /
-	<a href="http://nate-d-olson.github.io/lab_notebok/tag/docker.html">Docker</a>
+	<a href="http://nate-d-olson.github.io/lab_notebok/tag/assembly-validation.html">assembly validation</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <h3>Notes from&nbsp;1/15/2015</h3>
-<p>Objective:
-Analyzing consensus base results on MiSeq and <span class="caps">PGM</span>&nbsp;data</p>
-<h4>Approach</h4>
-<ol>
-<li>Loading data into sqlite database - used R code vcf_parameters_to_db.R<ul>
-<li>issue readVcf() in the VariantAnnotation package does not read in sample&nbsp;information</li>
+                <h2>Genome assembly validation pipeline&nbsp;1/29/2015</h2>
+<h3>Objectives</h3>
+<ul>
+<li>Finialize Genome assembly pipeline, raw reads to pilon&nbsp;results </li>
+</ul>
+<h3>Approach</h3>
+<ul>
+<li>
+<p>Changing memory limits for&nbsp;docker </p>
+<ul>
+<li>Following guidance from&nbsp;http://stackoverflow.com/questions/24422123/change-boot2docker-memory-assignment</li>
+<li>from the command&nbsp;line</li>
+</ul>
+<p>$ boot2docker delete
+$ boot2docker init -m 8192
+$ boot2docker info
+{&#8230;..
+    &#8220;Memory&#8221;: 8192,
+&#8230;.. <br />&nbsp;}</p>
+</li>
+<li>
+<p>Booking up docker&nbsp;daemon</p>
+<ul>
+<li>command&nbsp;line</li>
+</ul>
+<p>boot2docker up
+boot2docker ssh 
+docker run -d -p 443:8888 -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/micro_rm_master/:/micro_rm_bioinf -e &#8220;<span class="caps">PASSWORD</span>=micro_rm_pw&#8221;&nbsp;varcall_notebook</p>
+<ul>
+<li>received the following error message &#8216;Pulling repository varcall_notebook
+<span class="caps">FATA</span>[0002] Error: image library/varcall_notebook:latest not&nbsp;found&#8217;</li>
+<li>had to rebuild notebook
+&#8216;docker build -t varcall_notebook&nbsp;varcall_docker_notebook/&#8217;</li>
+<li>tried re-running docker run command, getting the same error with localhost being rejected&nbsp;&#8230;</li>
+<li>running from the commandline for the time being
+docker run -i -t -v ~/Desktop/micro_rm_dev:/notebooks -v ~/Google\ Drive/<span class="caps">NIST</span>-Projects/micro\ <span class="caps">RM</span>/micro_rm_master/micro_rm_bioinf/:/micro_rm_bioinf -e &#8220;<span class="caps">PASSWORD</span>=micro_rm_pw&#8221; varcall_notebook&nbsp;sh</li>
 </ul>
 </li>
-<li></li>
-</ol>
-<h4>Testing out&nbsp;Gemini</h4>
-<p>Gemini Website -[wget https://raw.github.com/arq5x/gemini/master/gemini/scripts/gemini_install.py]
-<em> Tool for analyzing variant annotations in the human genome
-</em> May be able to use to load data into sqlite
-* install following website failed on desktop, installing in&nbsp;docker</p>
-<div class="highlight"><pre>sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh
-wget https://raw.github.com/arq5x/gemini/master/gemini/scripts/gemini_install.py
-python gemini_install.py --nodata /usr/local /usr/local/shared/bin
+<li>
+<p>Modifying tmap to map unaligned&nbsp;bams</p>
+</li>
+<li>tmap does not utilize flow space information, only used as part of variant&nbsp;calling</li>
+</ul>
+<h3>Running tmap&nbsp;pipeline</h3>
+<div class="highlight"><pre>command-line argument
+
+python /micro_rm_bioinf/pipelines/map_pgm_pipeline.py /micro_rm_bioinf/params/pgm_mapping_params.txt
+
+run started at 3:35 pm
+finished around 3:55 pm
 </pre></div>
 
 
-<ul>
-<li>gemini load -v analysis/bioinf/sequence_purity/consensus_base_pgm/RM8375_PGM.vcf RM8375_gemini.db &#8212;skip-gerp-bp &#8212;skip-cadd &#8212;skip-gene-tables &#8212;cores 6<ul>
-<li>installed with&nbsp;data </li>
-</ul>
-</li>
-<li>new approach - convert to tsv using vcf2tsv part of&nbsp;vcflib</li>
-</ul>
-<h4>Issue with&nbsp;multi-sample</h4>
-<ul>
-<li>MiSeq data the <span class="caps">ID</span> was unique but the sample was not, need to switch in run_bwa_mem_pe.py and&nbsp;rerun</li>
-<li>Rerunning Miseq
-    sudo docker run -i -t -v /media/nolson/second/current_projects/micro_rm_dev:/notebooks varcall_notebook sh
-    cd analysis/bioinf/sequence_purity
-    python run_bwa_mem_pe.py bwa_mem_pipeline_params_2015_01_15_HGAP.txt
-    python run_consensus_base_pipeline.py miseq_consensus_base_params_2015_01_15.txt
-&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="caps">HEAD</span></li>
-</ul>
-<p>had to work out bugs with sample id - changed parameters variable names to pipeline_params for information from params file and run_params to the parameters for running a specific input&nbsp;file.</p>
-<p>=======</p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>dfdbf41564a59a4d73f2e6e7fa23522f3ab2676d</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<h3>Running MiSeq&nbsp;pipeline</h3>
+<p>python /micro_rm_bioinf/pipelines/map_miseq_pipeline.py /micro_rm_bioinf/params/miseq_mapping_params.txt
+run started around <span class="caps">4PM</span> and finished around <span class="caps">5PM</span></p>
+<h3>Pilon&nbsp;pipeline</h3>
+<div class="highlight"><pre>python /micro_rm_bioinf/pipelines/pilon_pipeline.py /micro_rm_bioinf/params/pgm_mapping_params.txt
+
+after working out bugs started pilon pgm pipeline at 5:40 PM
+finished aroung 5:45 PM
+compared to first run using break and novel identified one additional candidate missassembly, another few hundered bp deletion
+    need to look into the genome annotation and coverage data for reasons for deletion
+
+python /micro_rm_bioinf/pipelines/pilon_pipeline.py /micro_rm_bioinf/params/miseq_mapping_params.txt
+started 5:45 PM
+</pre></div>
             </div>
             <!-- /.entry-content -->
         </article>
